@@ -6,30 +6,27 @@ using System.Threading.Tasks;
 
 namespace Librería_de_Clases
 {
-    class Nodo2_3<T>
+    public class Nodo2_3<T>
     {
-        public class NodoAVL<T>
+        public T[] Valor = new T[2];
+        public Nodo2_3<T>[] Hijo = new Nodo2_3<T>[3];
+
+        public bool EsHoja
         {
-            public T Valor;
-            public int FactorBalanceo;
-            public NodoAVL<T> HijoIzquierdo, HijoDerecho;
-
-            public bool EsHoja
+            get
             {
-                get
-                {
-                    return HijoDerecho == null && HijoIzquierdo == null;
-                }
+                return Hijo[0] == null && Hijo[1] == null && Hijo[2] == null;
             }
+        }
 
-
-            public NodoAVL(T valor)
+        public Nodo2_3(T valor)
+        {
+            this.Valor[0] = valor;
+            for (int i = 0; i < 3; i++)
             {
-                this.Valor = valor;
-                this.FactorBalanceo = 0;
-                this.HijoIzquierdo = null;
-                this.HijoDerecho = null;
+                Hijo[i] = null;
             }
         }
     }
 }
+
