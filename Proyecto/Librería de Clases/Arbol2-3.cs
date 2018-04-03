@@ -22,7 +22,7 @@ namespace Librería_de_Clases
             Insertar(vNuevo, Raiz);
         }
 
-        private void Insertar(T vNuevo, Nodo2_3<T> nAuxiliar)
+        private T Insertar(T vNuevo, Nodo2_3<T> nAuxiliar)
         {
             // Si el nodo esta vacío (raiz inicialmente) únicamente se inserta el valor en el nodo.
             if (nAuxiliar == null)
@@ -32,40 +32,97 @@ namespace Librería_de_Clases
             // Si es un nodo hoja se puede insertar el primer o segundo valor del nodo.
             else if (nAuxiliar.EsHoja == true)
             {
-                // Si el nodo únicamente tiene un valor, se inserta el segundo donde corresponde
-                if (nAuxiliar.Valor[0].CompareTo(vNuevo) == -1 && nAuxiliar.Valor[1] == null)
-                {
-                    nAuxiliar.Valor[1] = vNuevo;
-                }
-                else if (Raiz.Valor[0].CompareTo(vNuevo) == 1 && nAuxiliar.Valor[1] == null)
-                {
-                    T valorAuxiliar = nAuxiliar.Valor[0];
-                    nAuxiliar.Valor[1] = valorAuxiliar;
-                    nAuxiliar.Valor[0] = vNuevo;
-                }
-                // Si el nodo tiene dos valores, se ordenan los valores para subir el valor central.
-                if (nAuxiliar.Valor[0] != null && nAuxiliar.Valor[1] != null)
-                {
-                    if (Raiz.Valor[0].CompareTo(vNuevo) == 1)
-                    {
-                        // subir Raiz.Valor[0]
-                    }
-                    else if (Raiz.Valor[0].CompareTo(vNuevo) == -1 && Raiz.Valor[1].CompareTo(vNuevo) == 1)
-                    {
-                        // Subir vNuevo
-                    }
-                    else
-                    {
-                        // Subir Raiz.Valor[1]
-                    }
-                }
+                InsertarAca(nAuxiliar, vNuevo);
             }
             // Si la siguiente condicion se cumple quiere decir que solo hay opción de hijo izquierdo o derecho.
             else if (nAuxiliar.Valor[1] == null)
             {
-                
+                // El valor nuevo es MENOR que la llave padre, se debe dirigir al hijo izquierdo.
+                if (nAuxiliar.Valor[0].CompareTo(vNuevo) == 1)
+                {
+                    T valorTemp = Insertar(vNuevo, nAuxiliar.Hijo[0]);
+                    // INSERTAR ACÁ
+                }
+                // El valor nuevo es MAYOR que la llave padre, se debe dirigir al hijo derecho.
+                else if (nAuxiliar.Valor[0].CompareTo(vNuevo) == -1)
+                    Insertar(vNuevo, nAuxiliar.Hijo[2]);
+
+            }
+            // Si la siguiente condicion se cumple quiere decir que hay opción hijo izquierdo, derecho o central.
+            else if (nAuxiliar.Valor[0] != null && nAuxiliar.Valor[1] != null)
+            {
+                // El valor nuevo es MENOR que la llave padre izquierda, se debe dirigir al hijo izquierdo.
+                if (nAuxiliar.Valor[0].CompareTo(vNuevo) == 1)
+                    Insertar(vNuevo, nAuxiliar.Hijo[0]);
+                // El valor nuevo es MAYOR que la llave padre izquierda y MENOR que la llave padre derecha, se debe dirigir al hijo central.
+                if (nAuxiliar.Valor[0].CompareTo(vNuevo) == -1 && nAuxiliar.Valor[1].CompareTo(vNuevo) == 1)
+                    Insertar(vNuevo, nAuxiliar.Hijo[1]);
+                // El valor nuevo es MAYOR que la llave padre derecha, se debe dirigir al hijo derecho.
+                else if (nAuxiliar.Valor[1].CompareTo(vNuevo) == -1)
+                    Insertar(vNuevo, nAuxiliar.Hijo[2]);
             }
         }
+
+
+
+        public T InsertarAca(Nodo2_3<T> nAuxiliar, T vNuevo)
+        {
+            // Si el nodo únicamente tiene un valor, se inserta el segundo donde corresponde
+            if (nAuxiliar.Valor[0].CompareTo(vNuevo) == -1 && nAuxiliar.Valor[1] == null)
+            {
+                nAuxiliar.Valor[1] = vNuevo;
+            }
+            else if (nAuxiliar.Valor[0].CompareTo(vNuevo) == 1 && nAuxiliar.Valor[1] == null)
+            {
+                T valorAuxiliar = nAuxiliar.Valor[0];
+                nAuxiliar.Valor[1] = valorAuxiliar;
+                nAuxiliar.Valor[0] = vNuevo;
+            }
+            // Si el nodo tiene dos valores, se ordenan los valores para subir el valor central.
+            if (nAuxiliar.Valor[0] != null && nAuxiliar.Valor[1] != null)
+            {
+                if (nAuxiliar.Valor[0].CompareTo(vNuevo) == 1)
+                {
+                    // subir Raiz.Valor[0]
+
+                    T valorSubir = nAuxiliar.Valor[0];
+                    nAuxiliar.Valor[0] = vNuevo;
+
+                    return valorSubir;
+                }
+                else if (nAuxiliar.Valor[0].CompareTo(vNuevo) == -1 && nAuxiliar.Valor[1].CompareTo(vNuevo) == 1)
+                {
+                    // Subir vNuevo
+                }
+                else
+                {
+                    // Subir Raiz.Valor[1]
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public List<T> ObtenerArbol()
         {
