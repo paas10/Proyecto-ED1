@@ -8,23 +8,41 @@ namespace Librería_de_Clases
 {
     public class Nodo2_3<T>
     {
-        public T[] Valor = new T[2];
-        public Nodo2_3<T>[] Hijo = new Nodo2_3<T>[3];
+        public T[] Elementos = new T[2];
+        public Nodo2_3<T>[] Hijos = new Nodo2_3<T>[3];
+        public Nodo2_3<T> Padre;
+
+
+        public Nodo2_3()
+        {
+            this.Padre = null;
+        }
 
         public bool EsHoja
         {
             get
             {
-                return Hijo[0] == null && Hijo[1] == null && Hijo[2] == null;
+                return Hijos[0] == null && Hijos[1] == null && Hijos[2] == null;
             }
+        }
+
+        public int NumerodeElementos()
+        {
+            int count = 0;
+            for (int i = 0; i < this.Elementos.Length; i++)
+            {
+                if (this.Elementos[i] != null)
+                    count++;
+            }
+            return count;
         }
 
         public Nodo2_3(T valor)
         {
-            this.Valor[0] = valor;
+            this.Elementos[0] = valor;
             for (int i = 0; i < 3; i++)
             {
-                Hijo[i] = null;
+                Hijos[i] = null;
             }
         }
     }

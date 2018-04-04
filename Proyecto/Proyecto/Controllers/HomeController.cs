@@ -13,17 +13,13 @@ namespace Proyecto.Controllers
             return View();
         }
 
-        public ActionResult About()
+       public ActionResult RegistrarUsuarios()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Login()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }
