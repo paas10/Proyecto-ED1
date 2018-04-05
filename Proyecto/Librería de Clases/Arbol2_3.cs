@@ -133,22 +133,177 @@ namespace Librería_de_Clases
                     else 
                     {
                         InsertarAca(ref nAuxiliar.Padre, nAuxiliar.Elementos[0]);
-                        // REVISAR EN ESTA POSICION COMO QUEDARÍAN LOS HIJOS
 
-                        Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(vNuevo);
-                        Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+                        // Si en el nodo que se encuentra es un hijo izquierdo se acomodan la nueva distribucion de los hijos dependiendo de este criterio
+                        // Es exactamente lo mismo con las demás opciones.
+                        if (nAuxiliar.PosicionHijo == "Hijo Izquierdo")
+                        {
+                            Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(vNuevo);
+                            Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+                            Nodo2_3<T> nHijoDerecho;
 
-                        nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
-                        nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            if (nAuxiliar.Padre.Hijos[1] != null)
+                                nHijoDerecho = nAuxiliar.Padre.Hijos[1];
+                            else
+                                nHijoDerecho = nAuxiliar.Padre.Hijos[2];
+
+                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                        }
+                        else if (nAuxiliar.PosicionHijo == "Hijo Central")
+                        {
+                            Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                            Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+
+                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                        }
+                        else if (nAuxiliar.PosicionHijo == "Hijo Derecho")
+                        {
+                            Nodo2_3<T> nHijoIzquierdo = nAuxiliar.Padre.Hijos[1];
+
+                            if (nAuxiliar.Padre.Hijos[1] != null)
+                                nHijoIzquierdo = nAuxiliar.Padre.Hijos[1];
+                            else
+                                nHijoIzquierdo = nAuxiliar.Padre.Hijos[0];
+
+                            Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(vNuevo);
+                            Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+
+                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                        }
+                        
                     }
                 }
                 else if (nAuxiliar.Elementos[0].CompareTo(vNuevo) == -1 && nAuxiliar.Elementos[1].CompareTo(vNuevo) == 1)
                 {
                     // Subir vNuevo
+
+                    // Si el papá del actual es nulo, tiene que crearse un nuevo nodo que sea papi para el acutual.
+                    if (nAuxiliar.Padre == null)
+                    {
+                        Nodo2_3<T> nPadre = new Nodo2_3<T>(vNuevo);
+                        Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                        Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+
+                        nPadre.Hijos[0] = nHijoIzquierdo;
+                        nPadre.Hijos[2] = nHijoDerecho;
+                    }
+                    // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
+                    else
+                    {
+                        InsertarAca(ref nAuxiliar.Padre, vNuevo);
+
+                        // Si en el nodo que se encuentra es un hijo izquierdo se acomodan la nueva distribucion de los hijos dependiendo de este criterio
+                        // Es exactamente lo mismo con las demás opciones.
+                        if (nAuxiliar.PosicionHijo == "Hijo Izquierdo")
+                        {
+                            Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                            Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+                            Nodo2_3<T> nHijoDerecho;
+
+                            if (nAuxiliar.Padre.Hijos[1] != null)
+                                nHijoDerecho = nAuxiliar.Padre.Hijos[1];
+                            else
+                                nHijoDerecho = nAuxiliar.Padre.Hijos[2];
+
+                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                        }
+                        else if (nAuxiliar.PosicionHijo == "Hijo Central")
+                        {
+                            Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                            Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+
+                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                        }
+                        else if (nAuxiliar.PosicionHijo == "Hijo Derecho")
+                        {
+                            Nodo2_3<T> nHijoIzquierdo;
+
+                            if (nAuxiliar.Padre.Hijos[1] != null)
+                                nHijoIzquierdo = nAuxiliar.Padre.Hijos[1];
+                            else
+                                nHijoIzquierdo = nAuxiliar.Padre.Hijos[0];
+
+                            Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                            Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+
+                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                        }
+
+                    }
                 }
                 else
                 {
                     // Subir nAuxiliar.Elementos[1]
+
+                    // Si el papá del actual es nulo, tiene que crearse un nuevo nodo que sea papi para el acutual.
+                    if (nAuxiliar.Padre == null)
+                    {
+                        Nodo2_3<T> nPadre = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+                        Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                        Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(vNuevo);
+
+                        nPadre.Hijos[0] = nHijoIzquierdo;
+                        nPadre.Hijos[2] = nHijoDerecho;
+                    }
+                    // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
+                    else
+                    {
+                        InsertarAca(ref nAuxiliar.Padre, nAuxiliar.Elementos[1]);
+
+                        // Si en el nodo que se encuentra es un hijo izquierdo se acomodan la nueva distribucion de los hijos dependiendo de este criterio
+                        // Es exactamente lo mismo con las demás opciones.
+                        if (nAuxiliar.PosicionHijo == "Hijo Izquierdo")
+                        {
+                            Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                            Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(vNuevo);
+                            Nodo2_3<T> nHijoDerecho;
+
+                            if (nAuxiliar.Padre.Hijos[1] != null)
+                                nHijoDerecho = nAuxiliar.Padre.Hijos[1];
+                            else
+                                nHijoDerecho = nAuxiliar.Padre.Hijos[2];
+
+                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                        }
+                        else if (nAuxiliar.PosicionHijo == "Hijo Central")
+                        {
+                            Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                            Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(vNuevo);
+
+                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                        }
+                        else if (nAuxiliar.PosicionHijo == "Hijo Derecho")
+                        {
+                            // Hermano adyacente
+                            Nodo2_3<T> nHijoIzquierdo;
+
+                            if (nAuxiliar.Padre.Hijos[1] != null)
+                                nHijoIzquierdo = nAuxiliar.Padre.Hijos[1];
+                            else
+                                nHijoIzquierdo = nAuxiliar.Padre.Hijos[0];
+
+                            Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                            Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(vNuevo);
+
+                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                        }
+
+                    }
                 }
             }
 
