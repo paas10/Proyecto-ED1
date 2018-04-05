@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Librería_de_Clases;
+using Proyecto.Models;
 using Proyecto.Clases;
 
 namespace Proyecto.Clases

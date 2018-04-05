@@ -5,9 +5,9 @@ using System.Linq;
 using System.Web;
 
 
-namespace Librería_de_Clases
+namespace Proyecto.Models
 {
-    class Pelicula : IComparable
+    public class Pelicula : IComparable
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Tipo del Film es Requerido")]
         public string Tipo { get; set; }
@@ -16,12 +16,12 @@ namespace Librería_de_Clases
         public string Nombre { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Año de Lazamiento de La Pelicula es Requerido")]
-        public DateTime AñodeLanzamiento { get; set; }
+        public int AñodeLanzamiento { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Genero de la Pelicula es Requerido")]
         public string Genero { get; set; }
 
-        public Pelicula(string Tipo, string Nombre, DateTime AñodeLanzamiento, string Genero)
+        public Pelicula(string Tipo, string Nombre, int AñodeLanzamiento, string Genero)
         {
             this.Tipo = Tipo;
             this.Nombre = Nombre;
@@ -34,7 +34,7 @@ namespace Librería_de_Clases
         {
             this.Tipo = null;
             this.Nombre = null;
-            this.AñodeLanzamiento = DateTime.Now;
+            this.AñodeLanzamiento = Convert.ToInt32(DateTime.Now.Year);
             this.Genero = Genero;
         }
 
@@ -53,24 +53,22 @@ namespace Librería_de_Clases
             return Genero.CompareTo(pelicula.Genero);
         }
 
-        //Modificar, ver si implementar o no lo del Codigo PK.
         public int CompareTo(object obj)
         {
+            int res;
+
             try
             {
                 Pelicula pelicula = obj as Pelicula;
 
-                /*if (pelicula.codigoPK == 1)
-                    return CompareByNombredePelicula(pelicula);
-                else if (pelicula.codigoPK == 2)
-                {
-                    return CompareByAño(pelicula);
-                }   
+                res = CompareByAño(pelicula);
+
+                if (res != 0)
+                    return res;
                 else
-                {
-                    return CompareByGenero(pelicula);
-                }   */
-                return 0;
+                    res = CompareByNombredePelicula(pelicula);
+
+                return res;
             }
             catch (Exception ex)
             {
