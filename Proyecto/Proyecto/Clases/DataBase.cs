@@ -21,13 +21,13 @@ namespace Proyecto.Clases
             }
         }
 
-        public Arbol2_3<Pelicula> ArboldePeliculas;
+       /* public Arbol2_3<Pelicula> ArboldePeliculas;
         public List<string> ArchivoTexto;
 
         public DataBase()
         {
             ArboldePeliculas = new Arbol2_3<Pelicula>();
             ArchivoTexto = new List<string>();
-        }
+        }*/
     }
 }
