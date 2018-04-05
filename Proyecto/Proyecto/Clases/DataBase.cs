@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Librería_de_Clases;
+using Proyecto.Clases;
+
+namespace Proyecto.Clases
+{
+    public class DataBase
+    {
+        private static DataBase instance;
+        public static DataBase Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new DataBase();
+                return instance;
+            }
+        }
+
+        public Arbol2_3<Pelicula> ArboldePeliculas;
+        public List<string> ArchivoTexto;
+
+        public DataBase()
+        {
+            ArboldePeliculas = new Arbol2_3<Pelicula>();
+            ArchivoTexto = new List<string>();
+        }
+    }
+}

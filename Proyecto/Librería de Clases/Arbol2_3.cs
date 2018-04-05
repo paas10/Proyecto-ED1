@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Librería_de_Clases
 {
-    class Arbol2_3 <T> where T : IComparable
+    public class Arbol2_3 <T> where T : IComparable
     {
 
         public Nodo2_3<T> Raiz;
