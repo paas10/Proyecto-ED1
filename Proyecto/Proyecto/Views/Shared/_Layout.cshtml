@@ -13,7 +13,8 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" @Html.ActionLink("Guaflix", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</a>
+                <a class="navbar-brand" href="@Url.Action("Index","Home")"><span><img src="~/Content/GuaflixLG.png" height="30" /></span></a>
+
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="@Url.Action("RegistrarUsuarios","Home")"><span class="glyphicon glyphicon-user"></span> Registrarse</a></li>
