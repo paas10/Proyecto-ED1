@@ -95,6 +95,7 @@ namespace Librería_de_Clases
             return default(T);
         }
 
+
         private T InsertarAca(ref Nodo2_3<T> nAuxiliar, T vNuevo)
         {
             // Si el nodo únicamente tiene un valor, se inserta el segundo donde corresponde
@@ -125,9 +126,13 @@ namespace Librería_de_Clases
                         Nodo2_3<T> nPadre = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                         Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(vNuevo);
                         Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+                        nHijoIzquierdo.Padre = nPadre;
+                        nHijoDerecho.Padre = nPadre;
 
                         nPadre.Hijos[0] = nHijoIzquierdo;
                         nPadre.Hijos[2] = nHijoDerecho;
+
+                        Raiz = nPadre;
                     }
                     // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
                     else 
@@ -147,6 +152,10 @@ namespace Librería_de_Clases
                             else
                                 nHijoDerecho = nAuxiliar.Padre.Hijos[2];
 
+                            nHijoIzquierdo.Padre = nAuxiliar.Padre;
+                            nHijoCentral.Padre = nAuxiliar.Padre;
+                            nHijoDerecho.Padre = nAuxiliar.Padre;
+
                             nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
                             nAuxiliar.Padre.Hijos[1] = nHijoCentral;
                             nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
@@ -155,6 +164,9 @@ namespace Librería_de_Clases
                         {
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+
+                            nHijoIzquierdo.Padre = nAuxiliar.Padre;
+                            nHijoDerecho.Padre = nAuxiliar.Padre;
 
                             nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
                             nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
@@ -170,6 +182,10 @@ namespace Librería_de_Clases
 
                             Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(vNuevo);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+
+                            nHijoIzquierdo.Padre = nAuxiliar.Padre;
+                            nHijoCentral.Padre = nAuxiliar.Padre;
+                            nHijoDerecho.Padre = nAuxiliar.Padre;
 
                             nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
                             nAuxiliar.Padre.Hijos[1] = nHijoCentral;
@@ -189,8 +205,13 @@ namespace Librería_de_Clases
                         Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                         Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
 
+                        nHijoIzquierdo.Padre = nPadre;
+                        nHijoDerecho.Padre = nPadre;
+
                         nPadre.Hijos[0] = nHijoIzquierdo;
                         nPadre.Hijos[2] = nHijoDerecho;
+
+                        Raiz = nPadre;
                     }
                     // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
                     else
@@ -210,6 +231,10 @@ namespace Librería_de_Clases
                             else
                                 nHijoDerecho = nAuxiliar.Padre.Hijos[2];
 
+                            nHijoIzquierdo.Padre = nAuxiliar.Padre;
+                            nHijoCentral.Padre = nAuxiliar.Padre;
+                            nHijoDerecho.Padre = nAuxiliar.Padre;
+
                             nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
                             nAuxiliar.Padre.Hijos[1] = nHijoCentral;
                             nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
@@ -218,6 +243,9 @@ namespace Librería_de_Clases
                         {
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+
+                            nHijoIzquierdo.Padre = nAuxiliar.Padre;
+                            nHijoDerecho.Padre = nAuxiliar.Padre;
 
                             nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
                             nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
@@ -233,6 +261,10 @@ namespace Librería_de_Clases
 
                             Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
+
+                            nHijoIzquierdo.Padre = nAuxiliar.Padre;
+                            nHijoCentral.Padre = nAuxiliar.Padre;
+                            nHijoDerecho.Padre = nAuxiliar.Padre;
 
                             nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
                             nAuxiliar.Padre.Hijos[1] = nHijoCentral;
@@ -251,9 +283,15 @@ namespace Librería_de_Clases
                         Nodo2_3<T> nPadre = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
                         Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                         Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(vNuevo);
-
+                        nHijoIzquierdo.Padre = nPadre;
+                        nHijoDerecho.Padre = nPadre;
+                        //PROBABLEMENTE ACÁ HAY QUE JALAR EL RESTO DE PROPIEDADES DE LOS NODOS
                         nPadre.Hijos[0] = nHijoIzquierdo;
                         nPadre.Hijos[2] = nHijoDerecho;
+
+// ME IMAGINO QUE ACÁ PODRÍA FUNCIONAR UN TRY CATCH PARA JALAR EL RESTO DE HIJOS, CON TODAS LAS PROPIEDADES....
+
+                        Raiz = nPadre;
                     }
                     // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
                     else
@@ -273,6 +311,10 @@ namespace Librería_de_Clases
                             else
                                 nHijoDerecho = nAuxiliar.Padre.Hijos[2];
 
+                            nHijoIzquierdo.Padre = nAuxiliar.Padre;
+                            nHijoCentral.Padre = nAuxiliar.Padre;
+                            nHijoDerecho.Padre = nAuxiliar.Padre;
+
                             nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
                             nAuxiliar.Padre.Hijos[1] = nHijoCentral;
                             nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
@@ -281,6 +323,9 @@ namespace Librería_de_Clases
                         {
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(vNuevo);
+
+                            nHijoIzquierdo.Padre = nAuxiliar.Padre;
+                            nHijoDerecho.Padre = nAuxiliar.Padre;
 
                             nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
                             nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
@@ -297,6 +342,10 @@ namespace Librería_de_Clases
 
                             Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(vNuevo);
+
+                            nHijoIzquierdo.Padre = nAuxiliar.Padre;
+                            nHijoCentral.Padre = nAuxiliar.Padre;
+                            nHijoDerecho.Padre = nAuxiliar.Padre;
 
                             nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
                             nAuxiliar.Padre.Hijos[1] = nHijoCentral;
