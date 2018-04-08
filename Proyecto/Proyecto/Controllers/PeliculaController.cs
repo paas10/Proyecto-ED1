@@ -64,7 +64,8 @@ namespace Proyecto.Controllers
 
                 DataBase.Instance.ArboldePeliculas.Insertar(nuevaPelicula);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
+                //return RedirectToAction("Index");
             }
             catch
             {

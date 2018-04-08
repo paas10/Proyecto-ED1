@@ -11,15 +11,29 @@ namespace Librería_de_Clases
     {
 
         public Nodo2_3<T> Raiz;
+        private Nodo2_3<T> RaizSecundaria;
+        private bool TrabajarSobreSecundaria = false;
+        public int nElementos;
 
         public Arbol2_3()
         {
             this.Raiz = null;
+            this.nElementos = 0;
         }
 
         public void Insertar(T vNuevo)
         {
+            this.RaizSecundaria = null;
+
+            nElementos += 1;
             Insertar(vNuevo, ref Raiz);
+
+            if (TrabajarSobreSecundaria == true)
+            {
+                Raiz = RaizSecundaria;
+                TrabajarSobreSecundaria = false;
+            }
+                
         }
 
         private T Insertar(T vNuevo, ref Nodo2_3<T> nAuxiliar)
@@ -132,7 +146,19 @@ namespace Librería_de_Clases
                         nPadre.Hijos[0] = nHijoIzquierdo;
                         nPadre.Hijos[2] = nHijoDerecho;
 
-                        Raiz = nPadre;
+                        int cont = 0;
+                        ContarLLaves(nPadre, ref cont);
+
+                        if (nElementos == cont)
+                        {
+                            Raiz = nPadre;
+                        }
+                        else
+                        {
+                            TrabajarSobreSecundaria = true;
+                            RaizSecundaria = nPadre;
+                        }
+                            
                     }
                     // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
                     else 
@@ -143,6 +169,12 @@ namespace Librería_de_Clases
                         // Es exactamente lo mismo con las demás opciones.
                         if (nAuxiliar.PosicionHijo == "Hijo Izquierdo")
                         {
+                            if (TrabajarSobreSecundaria == true)
+                            {
+                                RaizSecundaria.Hijos[2].Hijos[0] = Raiz.Hijos[1];
+                                RaizSecundaria.Hijos[2].Hijos[2] = Raiz.Hijos[2];
+                            }
+
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(vNuevo);
                             Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
                             Nodo2_3<T> nHijoDerecho;
@@ -156,23 +188,53 @@ namespace Librería_de_Clases
                             nHijoCentral.Padre = nAuxiliar.Padre;
                             nHijoDerecho.Padre = nAuxiliar.Padre;
 
-                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
-                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
-                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            if (TrabajarSobreSecundaria == false)
+                            {
+
+                                nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                                nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                                nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            }
+                            else
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[0] = nHijoIzquierdo;
+                                RaizSecundaria.Hijos[0].Hijos[2] = nHijoDerecho;
+                            }
+                            
                         }
                         else if (nAuxiliar.PosicionHijo == "Hijo Central")
                         {
+                            if (TrabajarSobreSecundaria == true)
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[0] = Raiz.Hijos[0];
+                                RaizSecundaria.Hijos[2].Hijos[2] = Raiz.Hijos[2];
+                            }
+
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
 
                             nHijoIzquierdo.Padre = nAuxiliar.Padre;
                             nHijoDerecho.Padre = nAuxiliar.Padre;
 
-                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
-                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            if (TrabajarSobreSecundaria == false)
+                            {
+                                nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                                nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            }
+                            else
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[2] = nHijoIzquierdo;
+                                RaizSecundaria.Hijos[2].Hijos[0] = nHijoDerecho;
+                            }
                         }
                         else if (nAuxiliar.PosicionHijo == "Hijo Derecho")
                         {
+                            if (TrabajarSobreSecundaria == true)
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[0] = Raiz.Hijos[0];
+                                RaizSecundaria.Hijos[0].Hijos[2] = Raiz.Hijos[1];
+                            }
+
                             Nodo2_3<T> nHijoIzquierdo = nAuxiliar.Padre.Hijos[1];
 
                             if (nAuxiliar.Padre.Hijos[1] != null)
@@ -187,11 +249,20 @@ namespace Librería_de_Clases
                             nHijoCentral.Padre = nAuxiliar.Padre;
                             nHijoDerecho.Padre = nAuxiliar.Padre;
 
-                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
-                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
-                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            if (TrabajarSobreSecundaria == false)
+                            {
+                                nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                                nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                                nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            }
+                            else
+                            {
+                                RaizSecundaria.Hijos[2].Hijos[0] = nHijoCentral;
+                                RaizSecundaria.Hijos[2].Hijos[2] = nHijoDerecho;
+                            }
+
                         }
-                        
+
                     }
                 }
                 else if (nAuxiliar.Elementos[0].CompareTo(vNuevo) == -1 && nAuxiliar.Elementos[1].CompareTo(vNuevo) == 1)
@@ -211,7 +282,19 @@ namespace Librería_de_Clases
                         nPadre.Hijos[0] = nHijoIzquierdo;
                         nPadre.Hijos[2] = nHijoDerecho;
 
-                        Raiz = nPadre;
+                        int cont = 0;
+                        ContarLLaves(nPadre, ref cont);
+
+                        if (nElementos == cont)
+                        {
+                            Raiz = nPadre;
+                        }
+                        else
+                        {
+                            TrabajarSobreSecundaria = true;
+                            RaizSecundaria = nPadre;
+                        }
+
                     }
                     // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
                     else
@@ -222,6 +305,12 @@ namespace Librería_de_Clases
                         // Es exactamente lo mismo con las demás opciones.
                         if (nAuxiliar.PosicionHijo == "Hijo Izquierdo")
                         {
+                            if (TrabajarSobreSecundaria == true)
+                            {
+                                RaizSecundaria.Hijos[2].Hijos[0] = Raiz.Hijos[1];
+                                RaizSecundaria.Hijos[2].Hijos[2] = Raiz.Hijos[2];
+                            }
+
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
                             Nodo2_3<T> nHijoDerecho;
@@ -235,23 +324,51 @@ namespace Librería_de_Clases
                             nHijoCentral.Padre = nAuxiliar.Padre;
                             nHijoDerecho.Padre = nAuxiliar.Padre;
 
-                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
-                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
-                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            if (TrabajarSobreSecundaria == false)
+                            {
+                                nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                                nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                                nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            }
+                            else
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[0] = nHijoIzquierdo;
+                                RaizSecundaria.Hijos[0].Hijos[2] = nHijoDerecho;
+                            }
                         }
                         else if (nAuxiliar.PosicionHijo == "Hijo Central")
                         {
+                            if (TrabajarSobreSecundaria == true)
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[0] = Raiz.Hijos[0];
+                                RaizSecundaria.Hijos[2].Hijos[2] = Raiz.Hijos[2];
+                            }
+
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
 
                             nHijoIzquierdo.Padre = nAuxiliar.Padre;
                             nHijoDerecho.Padre = nAuxiliar.Padre;
 
-                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
-                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            if (TrabajarSobreSecundaria == false)
+                            {
+                                nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                                nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            }
+                            else
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[2] = nHijoIzquierdo;
+                                RaizSecundaria.Hijos[2].Hijos[0] = nHijoDerecho;
+                            }
                         }
                         else if (nAuxiliar.PosicionHijo == "Hijo Derecho")
                         {
+                            if (TrabajarSobreSecundaria == true)
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[0] = Raiz.Hijos[0];
+                                RaizSecundaria.Hijos[0].Hijos[2] = Raiz.Hijos[1];
+                            }
+
                             Nodo2_3<T> nHijoIzquierdo;
 
                             if (nAuxiliar.Padre.Hijos[1] != null)
@@ -266,9 +383,18 @@ namespace Librería_de_Clases
                             nHijoCentral.Padre = nAuxiliar.Padre;
                             nHijoDerecho.Padre = nAuxiliar.Padre;
 
-                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
-                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
-                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            if (TrabajarSobreSecundaria == false)
+                            {
+                                nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                                nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                                nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            }
+                            else
+                            {
+                                RaizSecundaria.Hijos[2].Hijos[0] = nHijoCentral;
+                                RaizSecundaria.Hijos[2].Hijos[2] = nHijoDerecho;
+                            }
+                            
                         }
 
                     }
@@ -285,13 +411,22 @@ namespace Librería_de_Clases
                         Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(vNuevo);
                         nHijoIzquierdo.Padre = nPadre;
                         nHijoDerecho.Padre = nPadre;
-                        //PROBABLEMENTE ACÁ HAY QUE JALAR EL RESTO DE PROPIEDADES DE LOS NODOS
+
                         nPadre.Hijos[0] = nHijoIzquierdo;
                         nPadre.Hijos[2] = nHijoDerecho;
 
-// ME IMAGINO QUE ACÁ PODRÍA FUNCIONAR UN TRY CATCH PARA JALAR EL RESTO DE HIJOS, CON TODAS LAS PROPIEDADES....
+                        int cont = 0;
+                        ContarLLaves(nPadre, ref cont);
 
-                        Raiz = nPadre;
+                        if (nElementos == cont)
+                        {
+                            Raiz = nPadre;
+                        }
+                        else
+                        {
+                            TrabajarSobreSecundaria = true;
+                            RaizSecundaria = nPadre;
+                        }
                     }
                     // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
                     else
@@ -302,6 +437,12 @@ namespace Librería_de_Clases
                         // Es exactamente lo mismo con las demás opciones.
                         if (nAuxiliar.PosicionHijo == "Hijo Izquierdo")
                         {
+                            if (TrabajarSobreSecundaria == true)
+                            {
+                                RaizSecundaria.Hijos[2].Hijos[0] = Raiz.Hijos[1];
+                                RaizSecundaria.Hijos[2].Hijos[2] = Raiz.Hijos[2];
+                            }
+
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(vNuevo);
                             Nodo2_3<T> nHijoDerecho;
@@ -315,23 +456,52 @@ namespace Librería_de_Clases
                             nHijoCentral.Padre = nAuxiliar.Padre;
                             nHijoDerecho.Padre = nAuxiliar.Padre;
 
-                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
-                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
-                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+
+                            if (TrabajarSobreSecundaria == false)
+                            {
+                                nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                                nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                                nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            }
+                            else
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[0] = nHijoIzquierdo;
+                                RaizSecundaria.Hijos[0].Hijos[2] = nHijoDerecho;
+                            }
                         }
                         else if (nAuxiliar.PosicionHijo == "Hijo Central")
                         {
+                            if (TrabajarSobreSecundaria == true)
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[0] = Raiz.Hijos[0];
+                                RaizSecundaria.Hijos[2].Hijos[2] = Raiz.Hijos[2];
+                            }
+
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(vNuevo);
 
                             nHijoIzquierdo.Padre = nAuxiliar.Padre;
                             nHijoDerecho.Padre = nAuxiliar.Padre;
 
-                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
-                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            if (TrabajarSobreSecundaria == false)
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[2] = nHijoIzquierdo;
+                                RaizSecundaria.Hijos[2].Hijos[0] = nHijoDerecho;
+                            }
+                            else
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[1] = nHijoIzquierdo;
+                                RaizSecundaria.Hijos[1].Hijos[0] = nHijoDerecho;
+                            }
                         }
                         else if (nAuxiliar.PosicionHijo == "Hijo Derecho")
                         {
+                            if (TrabajarSobreSecundaria == true)
+                            {
+                                RaizSecundaria.Hijos[0].Hijos[0] = Raiz.Hijos[0];
+                                RaizSecundaria.Hijos[0].Hijos[2] = Raiz.Hijos[1];
+                            }
+
                             // Hermano adyacente
                             Nodo2_3<T> nHijoIzquierdo;
 
@@ -347,9 +517,18 @@ namespace Librería_de_Clases
                             nHijoCentral.Padre = nAuxiliar.Padre;
                             nHijoDerecho.Padre = nAuxiliar.Padre;
 
-                            nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
-                            nAuxiliar.Padre.Hijos[1] = nHijoCentral;
-                            nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            if (TrabajarSobreSecundaria == false)
+                            {
+                                nAuxiliar.Padre.Hijos[0] = nHijoIzquierdo;
+                                nAuxiliar.Padre.Hijos[1] = nHijoCentral;
+                                nAuxiliar.Padre.Hijos[2] = nHijoDerecho;
+                            }
+                            else
+                            {
+                                RaizSecundaria.Hijos[2].Hijos[0] = nHijoCentral;
+                                RaizSecundaria.Hijos[2].Hijos[2] = nHijoDerecho;
+                            }
+                            
                         }
 
                     }
@@ -358,11 +537,6 @@ namespace Librería_de_Clases
 
             return default(T); 
         }
-
-
-
-
-
 
 
 
@@ -388,6 +562,20 @@ namespace Librería_de_Clases
                 InOrder(Aux.Hijos[1], ref Elements);
                 Elements.Add(Aux.Elementos[1]);
                 InOrder(Aux.Hijos[2], ref Elements);
+            }
+        }
+
+        private void ContarLLaves(Nodo2_3<T> Aux, ref int Elements)
+        {
+            if (Aux != null)
+            {
+                ContarLLaves(Aux.Hijos[0], ref Elements);
+                if (Aux.Elementos[0] != null)
+                    Elements++;
+                ContarLLaves(Aux.Hijos[1], ref Elements);
+                if (Aux.Elementos[1] != null)
+                    Elements++;
+                ContarLLaves(Aux.Hijos[2], ref Elements);
             }
         }
 
