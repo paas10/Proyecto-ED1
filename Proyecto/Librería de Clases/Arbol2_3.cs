@@ -12,9 +12,11 @@ namespace Librería_de_Clases
 
         public Nodo2_3<T> Raiz;
         private Nodo2_3<T> RaizSecundaria;
+        private T NuevoOriginal; 
         private bool TrabajarSobreSecundaria = false;
+        public bool terminado = false;
         public int nElementos;
-
+        
         public Arbol2_3()
         {
             this.Raiz = null;
@@ -24,17 +26,22 @@ namespace Librería_de_Clases
         public void Insertar(T vNuevo)
         {
             this.RaizSecundaria = null;
+            terminado = false;
+            NuevoOriginal = vNuevo;
 
-            nElementos += 1;
             Insertar(vNuevo, ref Raiz);
+            nElementos += 1;
 
             if (TrabajarSobreSecundaria == true)
             {
                 Raiz = RaizSecundaria;
                 TrabajarSobreSecundaria = false;
             }
-                
+
+            CorregirPadres(ref Raiz);
         }
+
+
 
         private T Insertar(T vNuevo, ref Nodo2_3<T> nAuxiliar)
         {
@@ -163,7 +170,13 @@ namespace Librería_de_Clases
                     // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
                     else 
                     {
-                        InsertarAca(ref nAuxiliar.Padre, nAuxiliar.Elementos[0]);
+                        T subir = nAuxiliar.Elementos[0];
+                        nAuxiliar.Elementos[0] = vNuevo;
+
+                        InsertarAca(ref nAuxiliar.Padre, subir);
+
+                        if (terminado == true)
+                            return default(T);
 
                         // Si en el nodo que se encuentra es un hijo izquierdo se acomodan la nueva distribucion de los hijos dependiendo de este criterio
                         // Es exactamente lo mismo con las demás opciones.
@@ -301,6 +314,9 @@ namespace Librería_de_Clases
                     {
                         InsertarAca(ref nAuxiliar.Padre, vNuevo);
 
+                        if (terminado == true)
+                            return default(T);
+
                         // Si en el nodo que se encuentra es un hijo izquierdo se acomodan la nueva distribucion de los hijos dependiendo de este criterio
                         // Es exactamente lo mismo con las demás opciones.
                         if (nAuxiliar.PosicionHijo == "Hijo Izquierdo")
@@ -431,7 +447,13 @@ namespace Librería_de_Clases
                     // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
                     else
                     {
-                        InsertarAca(ref nAuxiliar.Padre, nAuxiliar.Elementos[1]);
+                        T subir = nAuxiliar.Elementos[1];
+                        nAuxiliar.Elementos[1] = vNuevo;
+
+                        InsertarAca(ref nAuxiliar.Padre, subir);
+
+                        if (terminado == true)
+                            return default(T);
 
                         // Si en el nodo que se encuentra es un hijo izquierdo se acomodan la nueva distribucion de los hijos dependiendo de este criterio
                         // Es exactamente lo mismo con las demás opciones.
@@ -513,6 +535,22 @@ namespace Librería_de_Clases
                             Nodo2_3<T> nHijoCentral = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(vNuevo);
 
+                            if (nAuxiliar.Hijos[0] != null && nAuxiliar.Hijos[1] != null && nAuxiliar.Hijos[2] != null && nAuxiliar.Hijos[0].EsHoja == true)
+                            {
+                                nHijoCentral.Hijos[0] = nAuxiliar.Hijos[0];
+                                nHijoCentral.Hijos[2] = nAuxiliar.Hijos[1];
+
+                                T Llave1 = default(T);
+                                Nodo2_3<T> vacio1 = new Nodo2_3<T>();
+                                Nodo2_3<T> vacio2 = new Nodo2_3<T>();
+                                nHijoDerecho.Hijos[0] = vacio1;
+                                nHijoDerecho.Hijos[2] = vacio2;
+
+                                nHijoDerecho.Hijos[0] = nAuxiliar.Hijos[2];
+                                nHijoDerecho.Hijos[0].Elementos[1] = Llave1;
+                                nHijoDerecho.Hijos[2].Elementos[0] = NuevoOriginal;
+                            }
+
                             nHijoIzquierdo.Padre = nAuxiliar.Padre;
                             nHijoCentral.Padre = nAuxiliar.Padre;
                             nHijoDerecho.Padre = nAuxiliar.Padre;
@@ -527,6 +565,8 @@ namespace Librería_de_Clases
                             {
                                 RaizSecundaria.Hijos[2].Hijos[0] = nHijoCentral;
                                 RaizSecundaria.Hijos[2].Hijos[2] = nHijoDerecho;
+
+                                terminado = true;
                             }
                             
                         }
@@ -576,6 +616,21 @@ namespace Librería_de_Clases
                 if (Aux.Elementos[1] != null)
                     Elements++;
                 ContarLLaves(Aux.Hijos[2], ref Elements);
+            }
+        }
+
+        private void CorregirPadres(ref Nodo2_3<T> Aux)
+        {
+            if (Aux.EsHoja == false)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (Aux.Hijos[i] != null)
+                    {
+                        Aux.Hijos[i].Padre = Aux;
+                        CorregirPadres(ref Aux.Hijos[i]);
+                    }
+                }
             }
         }
 
