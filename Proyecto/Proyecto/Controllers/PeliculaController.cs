@@ -1,15 +1,31 @@
-﻿using System;
+﻿using Proyecto.Clases;
+using Proyecto.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace Proyecto.Controllers
 {
     public class PeliculaController : Controller
     {
-        // GET: Pelicula
-        public ActionResult Index()
+
+        public void imprimirArchivo()
+        {
+
+            StreamWriter escritor = new StreamWriter(@"C:\Users\Admin\Desktop\Bitacora.txt");
+
+            foreach (var linea in DataBase.Instance.ArchivoTexto)
+            {
+                escritor.WriteLine(linea);
+            }
+            escritor.Close();
+        }
+
+            // GET: Pelicula
+            public ActionResult Index()
         {
             return View();
         }
@@ -30,11 +46,26 @@ namespace Proyecto.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            
             try
             {
-                // TODO: Add insert logic here
+                Pelicula nuevaPelicula = new Pelicula(collection["Tipo"], collection["Nombre"], Convert.ToInt32(collection["AñodeLanzamiento"]),
+                    collection["Genero"]);
 
-                return RedirectToAction("Index");
+                DataBase.Instance.ArchivoTexto.Add("INSERCION");
+                DataBase.Instance.ArchivoTexto.Add("\tTipo de pelicula: " + collection["Tipo"]);
+                DataBase.Instance.ArchivoTexto.Add("\tNombre de la pelicula: " + collection["Nombre"]);
+                DataBase.Instance.ArchivoTexto.Add("\tAño de lanzamiento: " + collection["AñodeLanzamiento"]);
+                DataBase.Instance.ArchivoTexto.Add("\tGenero: " + collection["Genero"]);
+                DataBase.Instance.ArchivoTexto.Add("");
+
+
+                imprimirArchivo();
+
+                DataBase.Instance.ArboldePeliculas.Insertar(nuevaPelicula);
+
+                return RedirectToAction("Create");
+                //return RedirectToAction("Index");
             }
             catch
             {

@@ -26,6 +26,21 @@ namespace Librería_de_Clases
             }
         }
 
+        public string PosicionHijo
+        {
+            get
+            {
+                if (Padre == null)
+                    return "No tiene padre";
+                else if (Padre.Hijos[0] == this)
+                    return "Hijo Izquierdo";
+                else if (Padre.Hijos[1] == this)
+                    return "Hijo Central";
+                else
+                    return "Hijo Derecho";
+            }
+        }
+
         public int NumerodeElementos()
         {
             int count = 0;
