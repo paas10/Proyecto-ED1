@@ -25,13 +25,45 @@ namespace Proyecto.Controllers
         }
 
             // GET: Pelicula
-            public ActionResult Index()
+        public ActionResult MisPeliculas(string NombreUsuario)
         {
-            return View();
+            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            {
+                if (item.Logeado == true)
+                {
+                    ViewBag.Message = item.Nombre;
+                }
+            }
+            if (DataBase.Instance.ListadePrueba == null)
+            {
+                TempData["msg"] = "<script> alert('No Tienes Peliculas Agregadas, Porfavor Agrega Peliculas Antes para ver tu Inicio');</script>";
+                return RedirectToAction("MenudeDecision","Home");
+            }
+            else
+            {
+                return View(DataBase.Instance.ListadePrueba);
+            }
         }
 
-        // GET: Pelicula/Details/5
-        public ActionResult Details(int id)
+        public ActionResult VerPelicula(string URL, string Nombre, string Tipo, string Genero, string Anio)
+        {
+            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            {
+                if (item.Logeado == true)
+                {
+                    ViewBag.Message = item.Nombre;
+                }
+            }
+
+            Pelicula NuevaPelicula = new Pelicula(URL, Nombre,Tipo,Anio,Genero);
+            List<Pelicula> ListadePeliculas = new List<Pelicula>();
+            ListadePeliculas.Add(NuevaPelicula);
+            return View(ListadePeliculas);
+        }
+
+
+            // GET: Pelicula/Details/5
+            public ActionResult Details(int id)
         {
             return View();
         }
@@ -49,8 +81,8 @@ namespace Proyecto.Controllers
             
             try
             {
-                Pelicula nuevaPelicula = new Pelicula(collection["Tipo"], collection["Nombre"], Convert.ToInt32(collection["AñodeLanzamiento"]),
-                    collection["Genero"]);
+                /*Pelicula nuevaPelicula = new Pelicula(collection["Tipo"], collection["Nombre"], Convert.ToInt32(collection["AñodeLanzamiento"]),
+                    collection["Genero"]);*/
 
                 DataBase.Instance.ArchivoTexto.Add("INSERCION");
                 DataBase.Instance.ArchivoTexto.Add("\tTipo de pelicula: " + collection["Tipo"]);
@@ -62,7 +94,7 @@ namespace Proyecto.Controllers
 
                 imprimirArchivo();
 
-                DataBase.Instance.ArboldePeliculas.Insertar(nuevaPelicula);
+                /*DataBase.Instance.ArboldePeliculas.Insertar(nuevaPelicula);*/
 
                 return RedirectToAction("Create");
                 //return RedirectToAction("Index");

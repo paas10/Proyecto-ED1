@@ -98,3 +98,5 @@ C:\Users\josue\Desktop\GitHub\Proyecto-ED1\Proyecto\Proyecto\obj\Debug\Proyecto.
 C:\Users\josue\Desktop\GitHub\Proyecto-ED1\Proyecto\Proyecto\obj\Debug\Proyecto.pdb
 C:\Users\Admin\Desktop\ED Projects\Proyecto-ED1\Proyecto\Proyecto\bin\Librería de Clases.dll
 C:\Users\Admin\Desktop\ED Projects\Proyecto-ED1\Proyecto\Proyecto\bin\Librería de Clases.pdb
+C:\Users\josue\Desktop\GitHub\Proyecto-ED1\Proyecto\Proyecto\bin\Librería de Clases.dll
+C:\Users\josue\Desktop\GitHub\Proyecto-ED1\Proyecto\Proyecto\bin\Librería de Clases.pdb

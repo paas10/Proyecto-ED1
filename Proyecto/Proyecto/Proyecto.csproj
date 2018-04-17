@@ -190,6 +190,10 @@
     <Content Include="Views\Home\RegistrarUsuarios.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Pelicula\Create.cshtml" />
+    <Content Include="Views\Home\MenudeDecision.cshtml" />
+    <Content Include="Views\Home\UploadFile.cshtml" />
+    <Content Include="Views\Pelicula\MisPeliculas.cshtml" />
+    <Content Include="Views\Pelicula\VerPelicula.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

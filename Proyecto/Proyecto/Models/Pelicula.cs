@@ -9,32 +9,27 @@ namespace Proyecto.Models
 {
     public class Pelicula : IComparable
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El Tipo del Film es Requerido")]
-        public string Tipo { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El URL del Film es Requerido")]
+        public string URL { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Nombre de La Pelicula es Requerido")]
         public string Nombre { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El Tipo del Film es Requerido")]
+        public string Tipo { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Año de Lazamiento de La Pelicula es Requerido")]
-        public int AñodeLanzamiento { get; set; }
+        public string AniodeLanzamiento { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Genero de la Pelicula es Requerido")]
         public string Genero { get; set; }
 
-        public Pelicula(string Tipo, string Nombre, int AñodeLanzamiento, string Genero)
+        public Pelicula(string URL, string Nombre, string Tipo, string AniodeLanzamiento, string Genero)
         {
-            this.Tipo = Tipo;
+            this.URL = URL;
             this.Nombre = Nombre;
-            this.AñodeLanzamiento = AñodeLanzamiento;
-            this.Genero = Genero;
-        }
-
-
-        public Pelicula()
-        {
-            this.Tipo = null;
-            this.Nombre = null;
-            this.AñodeLanzamiento = Convert.ToInt32(DateTime.Now.Year);
+            this.Tipo = Tipo;
+            this.AniodeLanzamiento = AniodeLanzamiento;
             this.Genero = Genero;
         }
 
@@ -45,7 +40,7 @@ namespace Proyecto.Models
 
         public int CompareByAño(Pelicula pelicula)
         {
-            return AñodeLanzamiento.CompareTo(pelicula.AñodeLanzamiento);
+            return AniodeLanzamiento.CompareTo(pelicula.AniodeLanzamiento);
         }
 
         public int CompareByGenero(Pelicula pelicula)

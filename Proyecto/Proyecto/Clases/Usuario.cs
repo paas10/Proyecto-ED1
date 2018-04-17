@@ -24,6 +24,9 @@ namespace Librería_de_Clases
         [Required(AllowEmptyStrings = false, ErrorMessage = "La Contraseña de Usuario es Requerida")]
         public string Password { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "La Contraseña de Usuario es Requerida")]
+        public bool Logeado { get; set; }
+
         public Usuario(string Nombre, string Apellido, int Edad, string Username, string Password)
         {
             this.Nombre = Nombre;
@@ -31,6 +34,7 @@ namespace Librería_de_Clases
             this.Edad = Edad;
             this.Username = Username;
             this.Password = Password;
+            this.Logeado = true;
         }
 
 
@@ -41,6 +45,7 @@ namespace Librería_de_Clases
             this.Edad = 0;
             this.Username = null;
             this.Password = null;
+            this.Logeado = false;
         }
     }
 }

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Proyecto.Models.Pelicula>
+
+@{
+    ViewBag.Title = "Ver Pelicula";
+}
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="@Url.Action("Index","Home")"><span><img src="~/Content/GuaflixLG.png" height="30" /></span></a>
+
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="@Url.Action("PaginadeUsuario","Home")"><span class="glyphicon glyphicon-user" style="color:deepskyblue"></span> @ViewBag.Message</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div style="background-color:deepskyblue; height:50px; opacity:0.5; border-radius:8px;"></div>
+<br />
+<div style="height:435px;">
+    <div>
+        <p style="float:left; padding-left:10px;">@Html.ActionLink("Regresar a mis Peliculas", "MisPeliculas")</p>
+        <p style="float:right">@Html.ActionLink("Eliminar de Mi WatchList", "Edit", new { /* id=item.PrimaryKey */ })</p>
+        <p style="color:transparent; float:right">.....</p>
+        <p style="float:right">@Html.ActionLink("Agregar a Mi WatchList", "Edit", new { /* id=item.PrimaryKey */ })</p>
+    </div>
+
+    @foreach (var item in Model)
+    {<br />
+        <h2 style="color:white">@Html.DisplayFor(modelItem => item.Nombre)</h2>
+        <div style="padding-left:10px;" class="wrapper">
+            <img src="@Url.Content(item.URL)" style="width:200px; height:300px; border: 1px solid white; border-radius:5px; float:left; margin: 10px 10px 0 0;" />
+        </div>
+        <table>
+            <tr><td><h4 style="color:white">Tipo: @Html.DisplayFor(modelItem => item.Tipo)</h4></td></tr>
+            <tr><td><h4 style="color:white">Año de Lanzamiento: @Html.DisplayFor(modelItem => item.AniodeLanzamiento)</h4></td></tr>
+            <tr><td><h4 style="color:white">Genero: @Html.DisplayFor(modelItem => item.Genero)</h4></td></tr>
+        </table>
+        <br />
+
+    }
+
+    <div style="background-color:deepskyblue; height:50px; opacity:0.5; border-radius:8px; margin-top:175px;"></div>
+</div>

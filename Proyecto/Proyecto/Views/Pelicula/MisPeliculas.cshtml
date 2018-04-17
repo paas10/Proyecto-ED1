@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Proyecto.Models.Pelicula>
+
+@{
+    ViewBag.Title = "Mis Peliculas";}
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="@Url.Action("Index","Home")"><span><img src="~/Content/GuaflixLG.png" height="30" /></span></a>
+
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="@Url.Action("PaginadeUsuario","Home")"><span class="glyphicon glyphicon-user" style="color:deepskyblue"></span> @ViewBag.Message</a></li>
+        </ul>
+    </div>
+</nav>
+
+<body style="background-image: url('/Content/Fondito2.jpg');">
+</body>
+
+<div align="center" style="position:relative; height:2500px; background-color:black; opacity:0.9; border-radius:8px;">
+    <h1 style="color:deepskyblue">Nuevas Peliculas</h1>
+    <div style="border: 2px solid black; border-radius:5px; height:400px; width:750px; background-color:black; opacity:0.9">
+        <iframe width="750" height="375" src="https://www.youtube.com/embed/QwievZ1Tx-8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <br />
+        <p align="left" style="text-emphasis-color:white">
+            @Html.ActionLink("Agregar Una Nueva Pelicula", "Create")
+        </p>
+    </div>
+    <br />
+    <div align="center" style="padding-left:50px;">
+        @foreach (var item in Model)
+        {
+            <div style="padding-left:10px;" class="wrapper"><a href="@Url.Action("VerPelicula", new { URL = item.URL, Nombre = item.Nombre, Tipo = item.Tipo, Genero = item.Genero, Anio = item.AniodeLanzamiento})"><img src="@Url.Content(item.URL)" style="width:200px; height:300px; border: 1px solid white; border-radius:5px; float:left; margin: 10px 10px 0 0;"/></a></div>
+        }
+    </div>
+
+
+</div>
+
