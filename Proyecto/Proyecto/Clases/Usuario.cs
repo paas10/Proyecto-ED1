@@ -73,7 +73,7 @@ namespace Librería_de_Clases
             {
                 Usuario usuario = obj as Usuario;
 
-                res = CompareByEdad(usuario);
+                res = CompareByUserName(usuario);
                 return res;
             }
             catch (Exception ex)

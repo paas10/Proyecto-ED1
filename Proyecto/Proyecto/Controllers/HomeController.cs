@@ -196,11 +196,11 @@ namespace Proyecto.Controllers
                 }
                 else if (item.Tipo == "Serie")
                 {
-                    DataBase.Instance.ArboldePeliculas.Insertar(item);
+                    DataBase.Instance.ArboldeSeries.Insertar(item);
                 }
                 else if (item.Tipo == "Documental")
                 {
-                    DataBase.Instance.ArboldePeliculas.Insertar(item);
+                    DataBase.Instance.ArboldeDocumentales.Insertar(item);
                 }
             }
 
