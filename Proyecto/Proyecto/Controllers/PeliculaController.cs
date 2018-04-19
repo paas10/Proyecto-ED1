@@ -201,8 +201,14 @@ namespace Proyecto.Controllers
             }
             else if(ListaGeneral.Count() == 0)
             {
-                TempData["msg"] = "<script> alert('El Dato que Buscas no Existe');</script>";
-                return View();
+                if(Tipo != null && Search != null)
+                {
+                    TempData["msg"] = "<script> alert('El Dato que Buscas no Existe');</script>";
+                }
+                else
+                {
+                    return View();
+                }
             }
 
                foreach (var item in ListaTemporaldeUsuarios)
