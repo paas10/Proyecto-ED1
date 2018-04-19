@@ -107,7 +107,7 @@ namespace Proyecto.Controllers
         public ActionResult Login(FormCollection collection)
         {
             //Se inserta el nuevo usuario al Árbol de usuarios
-            if (collection["Username"] == "Admin" && collection["Password"] == "Admin")
+            if ((collection["Username"] == "Admin" || collection["Username"] == "admin") && (collection["Password"] == "Admin" || collection["Password"] == "Admin"))
             {
                 ViewBag.Message = "Admin";
                 Usuario UsuarioNuevo = new Usuario();
