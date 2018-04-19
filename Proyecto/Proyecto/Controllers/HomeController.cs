@@ -35,6 +35,7 @@ namespace Proyecto.Controllers
                 if(item.Logeado == true)
                 {
                     Nuevo = item;
+                    ViewBag.Message = Nuevo.Nombre;
                     ListadeUsuarios.Add(Nuevo);
                 }
             }
@@ -120,7 +121,7 @@ namespace Proyecto.Controllers
         public ActionResult Login(FormCollection collection)
         {
             //Se inserta el nuevo usuario al Árbol de usuarios
-            if ((collection["Username"] == "Admin" || collection["Username"] == "admin") && (collection["Password"] == "Admin" || collection["Password"] == "Admin"))
+            if ((collection["Username"] == "Admin" || collection["Username"] == "admin") && (collection["Password"] == "Admin" || collection["Password"] == "admin"))
             {
                 ViewBag.Message = "Admin";
                 Usuario UsuarioNuevo = new Usuario();
@@ -128,7 +129,7 @@ namespace Proyecto.Controllers
                 UsuarioNuevo.Password = collection["Password"];
                 UsuarioNuevo.Logeado = true;
                 DataBase.Instance.ArboldeUsuarios.Insertar(UsuarioNuevo);
-                if(collection["Username"] == "Admin")
+                if(collection["Username"] == "Admin" || collection["Username"] == "admin")
                 {
                     return View("MenudeDecision");
                 }

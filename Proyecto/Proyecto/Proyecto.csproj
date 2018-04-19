@@ -200,6 +200,7 @@
     <Content Include="Views\Home\ForgetPassword.cshtml" />
     <Content Include="Views\Home\Prueba.cshtml" />
     <Content Include="Views\Pelicula\BuscarPelicula.cshtml" />
+    <Content Include="Views\Pelicula\json.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
