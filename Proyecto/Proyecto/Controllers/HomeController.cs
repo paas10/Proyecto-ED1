@@ -20,9 +20,17 @@ namespace Proyecto.Controllers
 
         public ActionResult MiUsuario()
         {
+            //Se crea un nuevo Usuario
             Usuario Nuevo = new Usuario();
-            List <Usuario> ListadeUsuarios = new List<Usuario>();
-            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            //Se crea una lista temporal de usuarios y una lista de usuarios para poder pasarla posteriormente.
+            List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
+            List<Usuario> ListadeUsuarios = new List<Usuario>();
+
+            //a la lista temporal de usuarios se le asignan los usuarios que posee el arbol.
+            ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+
+            //Se busca el usuario que esta logeado y es el que se envia a la vista.
+            foreach (var item in ListaTemporaldeUsuarios)
             {
                 if(item.Logeado == true)
                 {
@@ -36,7 +44,12 @@ namespace Proyecto.Controllers
         public ActionResult ForgetPassword(FormCollection collection)
         {
             string nombre = collection["Nombre"];
-            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            //Se crea una lista temporal de usuarios
+            List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
+            ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+
+            //se evalua cual es la contraseña que coincide y se asigna el nuevo valor
+            foreach (var item in ListaTemporaldeUsuarios)
             {
                 if(item.Nombre == collection["Nombre"])
                 {
@@ -48,7 +61,11 @@ namespace Proyecto.Controllers
 
         public ActionResult CerrarSesion()
         {
-            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
+            ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+
+            //Se deslogea al usuario que coincide con las especificaciones
+            foreach (var item in ListaTemporaldeUsuarios)
             {
                 if (item.Logeado == true)
                 {
@@ -65,7 +82,11 @@ namespace Proyecto.Controllers
 
         public ActionResult MenudeDecision()
         {
-            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
+            ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+
+            //Se evalua la decision y se envia el nombre de usuario para mostrarlo en las vistas
+            foreach (var item in ListaTemporaldeUsuarios)
             {
                 if (item.Logeado == true)
                 {
@@ -85,6 +106,7 @@ namespace Proyecto.Controllers
 
         public ActionResult Login(FormCollection collection)
         {
+            //Se inserta el nuevo usuario al Árbol de usuarios
             if (collection["Username"] == "Admin" && collection["Password"] == "Admin")
             {
                 ViewBag.Message = "Admin";
@@ -92,7 +114,7 @@ namespace Proyecto.Controllers
                 UsuarioNuevo.Nombre = collection["Username"];
                 UsuarioNuevo.Password = collection["Password"];
                 UsuarioNuevo.Logeado = true;
-                DataBase.Instance.ListadePruebaUser.Add(UsuarioNuevo);
+                DataBase.Instance.ArboldeUsuarios.Insertar(UsuarioNuevo);
                 if(collection["Username"] == "Admin")
                 {
                     return View("MenudeDecision");
@@ -112,7 +134,10 @@ namespace Proyecto.Controllers
 
         public ActionResult UploadFile()
         {
-            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
+            ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+
+            foreach (var item in ListaTemporaldeUsuarios)
             {
                 if (item.Logeado == true)
                 {
@@ -144,9 +169,17 @@ namespace Proyecto.Controllers
             Dato = Lector.ReadToEnd();
 
             var ListadePeliculas = JsonConvert.DeserializeObject<List<Pelicula>>(Dato);
-            DataBase.Instance.ListadePrueba = ListadePeliculas;
 
-            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            foreach (var item in ListadePeliculas)
+            {
+                DataBase.Instance.ArboldePeliculas.Insertar(item);
+
+            }
+
+            List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
+            ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+
+            foreach (var item in ListaTemporaldeUsuarios)
             {
                 if (item.Logeado == true)
                 {

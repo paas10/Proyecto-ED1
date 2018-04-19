@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Librería_de_Clases
 {
-    public class Usuario
+    public class Usuario:IComparable
     {
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Nombre del Usuario es Requerido")]
@@ -46,6 +46,53 @@ namespace Librería_de_Clases
             this.Username = null;
             this.Password = null;
             this.Logeado = false;
+        }
+
+
+
+        public int CompareByNombredeUsuario(Usuario usuario)
+        {
+            return Nombre.CompareTo(usuario.Nombre);
+        }
+
+        public int CompareByAño(Usuario usuario)
+        {
+            return Edad.CompareTo(usuario.Edad);
+        }
+
+        public int CompareByGenero(Usuario usuario)
+        {
+            return Username.CompareTo(usuario.Username);
+        }
+
+        public int CompareTo(object obj)
+        {
+            int res;
+
+            try
+            {
+                Usuario usuario = obj as Usuario;
+
+                res = CompareByAño(usuario);
+
+                if (res != 0)
+                    return res;
+                else
+                    res = CompareByNombredeUsuario(usuario);
+
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public delegate int Comparar(Usuario usuario);
+
+        public int CompareTo(Usuario usuario, Comparar criterio)
+        {
+            return criterio(usuario);
         }
     }
 }

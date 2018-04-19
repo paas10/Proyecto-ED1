@@ -4,3 +4,9 @@ C:\Users\Admin\Desktop\ED Projects\Proyecto-ED1\Proyecto\Librería de Clases\obj
 C:\Users\Admin\Desktop\ED Projects\Proyecto-ED1\Proyecto\Librería de Clases\obj\Debug\Librería de Clases.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Desktop\ED Projects\Proyecto-ED1\Proyecto\Librería de Clases\obj\Debug\Librería de Clases.dll
 C:\Users\Admin\Desktop\ED Projects\Proyecto-ED1\Proyecto\Librería de Clases\obj\Debug\Librería de Clases.pdb
+C:\Users\josue\Desktop\GitHub\Proyecto-ED1\Proyecto\Librería de Clases\bin\Debug\Librería de Clases.dll
+C:\Users\josue\Desktop\GitHub\Proyecto-ED1\Proyecto\Librería de Clases\bin\Debug\Librería de Clases.pdb
+C:\Users\josue\Desktop\GitHub\Proyecto-ED1\Proyecto\Librería de Clases\obj\Debug\Librería de Clases.csprojResolveAssemblyReference.cache
+C:\Users\josue\Desktop\GitHub\Proyecto-ED1\Proyecto\Librería de Clases\obj\Debug\Librería de Clases.csproj.CoreCompileInputs.cache
+C:\Users\josue\Desktop\GitHub\Proyecto-ED1\Proyecto\Librería de Clases\obj\Debug\Librería de Clases.dll
+C:\Users\josue\Desktop\GitHub\Proyecto-ED1\Proyecto\Librería de Clases\obj\Debug\Librería de Clases.pdb
