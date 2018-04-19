@@ -351,6 +351,7 @@ namespace Proyecto.Controllers
         }
 
         // GET: Pelicula/Delete/5
+        [HttpPost]
         public ActionResult Delete(string URL, string Trailer, string Nombre, string Tipo, string Anio, string Genero)
         {
             List<Pelicula> Lista = new List<Pelicula>();
@@ -396,9 +397,7 @@ namespace Proyecto.Controllers
                     {
                         PeliculasEliminadas.Remove(item);
                     }
-
                 }
-
 
                 return RedirectToAction("MisPeliculas", PeliculasEliminadas);
             }
