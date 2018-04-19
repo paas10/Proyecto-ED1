@@ -70,6 +70,7 @@ namespace Proyecto.Controllers
                 }
             }
 
+            //Se manda la lista especial a la vista para poder visualizar la unica pelicula
             Pelicula NuevaPelicula = new Pelicula(URL, Trailer, Nombre,Tipo,Anio,Genero);
             List<Pelicula> ListadePeliculas = new List<Pelicula>();
             ListadePeliculas.Add(NuevaPelicula);
@@ -79,7 +80,7 @@ namespace Proyecto.Controllers
 
 
             // GET: Pelicula/Details/5
-            public ActionResult Details(int id)
+        public ActionResult Details(int id)
         {
             return View();
         }
@@ -88,37 +89,6 @@ namespace Proyecto.Controllers
         public ActionResult Create()
         {
             return View();
-        }
-
-        // POST: Pelicula/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            
-            try
-            {
-                /*Pelicula nuevaPelicula = new Pelicula(collection["Tipo"], collection["Nombre"], Convert.ToInt32(collection["AñodeLanzamiento"]),
-                    collection["Genero"]);*/
-
-                DataBase.Instance.ArchivoTexto.Add("INSERCION");
-                DataBase.Instance.ArchivoTexto.Add("\tTipo de pelicula: " + collection["Tipo"]);
-                DataBase.Instance.ArchivoTexto.Add("\tNombre de la pelicula: " + collection["Nombre"]);
-                DataBase.Instance.ArchivoTexto.Add("\tAño de lanzamiento: " + collection["AñodeLanzamiento"]);
-                DataBase.Instance.ArchivoTexto.Add("\tGenero: " + collection["Genero"]);
-                DataBase.Instance.ArchivoTexto.Add("");
-
-
-                imprimirArchivo();
-
-                /*DataBase.Instance.ArboldePeliculas.Insertar(nuevaPelicula);*/
-
-                return RedirectToAction("Create");
-                //return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         // GET: Pelicula/Edit/5
