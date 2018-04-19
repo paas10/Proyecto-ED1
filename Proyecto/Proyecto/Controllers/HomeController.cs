@@ -35,7 +35,7 @@ namespace Proyecto.Controllers
                 if(item.Logeado == true)
                 {
                     Nuevo = item;
-                    ViewBag.Message = Nuevo.Nombre;
+                    ViewBag.Message = Nuevo.Username;
                     ListadeUsuarios.Add(Nuevo);
                 }
             }
@@ -129,14 +129,23 @@ namespace Proyecto.Controllers
                 UsuarioNuevo.Password = collection["Password"];
                 UsuarioNuevo.Logeado = true;
                 DataBase.Instance.ArboldeUsuarios.Insertar(UsuarioNuevo);
-                if(collection["Username"] == "Admin" || collection["Username"] == "admin")
+                return View("MenudeDecision");
+      
+            }
+            else if(collection["Username"]!= "Admin")
+            {
+                List<Usuario> ListadeUsuarios = new List<Usuario>();
+                ListadeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+                foreach (var item in ListadeUsuarios)
                 {
-                    return View("MenudeDecision");
+                    if (item.Username == collection["Username"] && item.Password == collection["Password"])
+                    {
+                        ViewBag.Message = item.Username;
+                        return View("UsuarioDecision");
+                    }
                 }
-                else
-                {
-                    return View("UsuarioDecision");
-                }
+                TempData["msg1"] = "<script> alert('El Usuario o La Contraseña es Incorrecta');</script>";
+                return View();
             }
             else
             {
@@ -144,6 +153,7 @@ namespace Proyecto.Controllers
                 TempData["msg1"] = "<script> alert('El Usuario o La Contraseña es Incorrecta');</script>";
                 return View();
             }
+            
         }
 
 
