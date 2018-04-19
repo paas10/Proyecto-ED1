@@ -55,12 +55,12 @@ namespace Librería_de_Clases
             return Nombre.CompareTo(usuario.Nombre);
         }
 
-        public int CompareByAño(Usuario usuario)
+        public int CompareByEdad(Usuario usuario)
         {
             return Edad.CompareTo(usuario.Edad);
         }
 
-        public int CompareByGenero(Usuario usuario)
+        public int CompareByUserName(Usuario usuario)
         {
             return Username.CompareTo(usuario.Username);
         }
@@ -73,13 +73,7 @@ namespace Librería_de_Clases
             {
                 Usuario usuario = obj as Usuario;
 
-                res = CompareByAño(usuario);
-
-                if (res != 0)
-                    return res;
-                else
-                    res = CompareByNombredeUsuario(usuario);
-
+                res = CompareByEdad(usuario);
                 return res;
             }
             catch (Exception ex)
