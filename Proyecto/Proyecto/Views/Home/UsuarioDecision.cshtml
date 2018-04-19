@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Menu de Admin";
+    ViewBag.Title = "Menu";
 }
 
 <body style="background-image: url('/Content/Sala.jpg'); background-size:cover;">
@@ -16,7 +16,8 @@
 
 
         <div class="btn-group" style="float:right; margin-right:25px; background-color:transparent; margin-top:15px; color:white">
-            <button type="button" class="btn btn-default dropdown-toggle" style="background-color:transparent; color:deepskyblue; border-color:transparent" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> @ViewBag.Message
+            <button type="button" class="btn btn-default dropdown-toggle" style="background-color:transparent; color:deepskyblue; border-color:transparent" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-user"></span> @ViewBag.Message
             </button>
 
             <ul class="dropdown-menu" role="menu" style="right:100%;">
@@ -33,11 +34,8 @@
         <h2 style="color:white" align="center">Bienvenido @ViewBag.Message</h2>
         <h5 style="color:white" align="center">Selecciona Una Opcion:</h5>
         <br />
-        <div style="float:left; margin-top:20px; margin-left:100px; position:relative;">
-            @Html.ActionLink("Cargar Archivo Json", "UploadFile", "Home", null, new { @class = "btn btn-primary btn-large"})
-        </div>
-        <div style="float:right; margin-top:20px; margin-right: 120px; position:relative;">
-            @Html.ActionLink("Ver Mis Peliculas", "MisPeliculas", "Pelicula", null, new { @class = "btn btn-primary btn-large"})
+        <div  align="center" style="margin-top:20px;position:relative;">
+            @Html.ActionLink("Ver Mis Peliculas", "MisPeliculas", "Pelicula", null, new { @class = "btn btn-primary btn-large" })
         </div>
     </div>
 </div>
@@ -45,4 +43,3 @@
 <br />
 <br />
 <br />
-

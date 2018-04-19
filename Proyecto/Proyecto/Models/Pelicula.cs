@@ -12,6 +12,9 @@ namespace Proyecto.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "El URL del Film es Requerido")]
         public string URL { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El URL del Trailer es Requerido")]
+        public string Trailer { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Nombre de La Pelicula es Requerido")]
         public string Nombre { get; set; }
 
@@ -24,9 +27,10 @@ namespace Proyecto.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Genero de la Pelicula es Requerido")]
         public string Genero { get; set; }
 
-        public Pelicula(string URL, string Nombre, string Tipo, string AniodeLanzamiento, string Genero)
+        public Pelicula(string URL, string Trailer,string Nombre, string Tipo, string AniodeLanzamiento, string Genero)
         {
             this.URL = URL;
+            this.Trailer = Trailer;
             this.Nombre = Nombre;
             this.Tipo = Tipo;
             this.AniodeLanzamiento = AniodeLanzamiento;

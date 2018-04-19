@@ -6,14 +6,13 @@
 }
 
 <body  style="background-image: url('/Content/pop.jpg'); background-repeat:no-repeat;">></body>
-
-    <h1 align="center" style="color:white">Accede a tu Cuenta</h1>
+    <h1 align="center" style="color:white; margin-top:0px;">Accede a tu Cuenta</h1>
 
 @Html.Raw(TempData["msg"])
 
     @using (Html.BeginForm())
     {
-        <div style="height:360px; border:2px solid white; border-radius:8px; width:500px; margin-left:220px; background: black; opacity:0.8" >
+        <div style="height:360px; border:2px solid white; border-radius:8px; width:500px; margin-left:220px; background: black; opacity:0.8;" >
             <hr />
             <div align="center" class="Icon">
                 <span aling="center" style="font-size:75px; color:deepskyblue" class="glyphicon glyphicon-user"></span>
@@ -40,7 +39,7 @@
                 <div align="center" class="col-md-offset-2 col-md-11">
                     <input type="submit" value="Acceder" class="btn btn-lg btn-primary btn-block btn-signin" />
                     <br />
-                    <div class="opcioncontra"><a href="">Olvidaste tu contraseña?</a></div>
+                    <div class="opcioncontra"><a href="@Url.Action("ForgetPassword","Home")">Olvidaste tu contraseña?</a></div>
                 </div>
             </div>
         </div>

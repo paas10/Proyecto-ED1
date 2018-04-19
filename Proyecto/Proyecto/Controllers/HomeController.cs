@@ -18,6 +18,46 @@ namespace Proyecto.Controllers
             return View();
         }
 
+        public ActionResult MiUsuario()
+        {
+            Usuario Nuevo = new Usuario();
+            List <Usuario> ListadeUsuarios = new List<Usuario>();
+            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            {
+                if(item.Logeado == true)
+                {
+                    Nuevo = item;
+                    ListadeUsuarios.Add(Nuevo);
+                }
+            }
+            return View(ListadeUsuarios);
+        }
+
+        public ActionResult ForgetPassword(FormCollection collection)
+        {
+            string nombre = collection["Nombre"];
+            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            {
+                if(item.Nombre == collection["Nombre"])
+                {
+                    item.Password = collection["Password"];
+                }
+            }
+            return View();
+        }
+
+        public ActionResult CerrarSesion()
+        {
+            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            {
+                if (item.Logeado == true)
+                {
+                    item.Logeado = false;
+                }
+            }
+            return View("Index");
+        }
+
         public ActionResult RegistrarUsuarios()
         {
             return View();
@@ -37,6 +77,11 @@ namespace Proyecto.Controllers
          
         }
 
+        public ActionResult UsuarioDecision()
+        {
+            return View();
+        }
+
 
         public ActionResult Login(FormCollection collection)
         {
@@ -48,7 +93,14 @@ namespace Proyecto.Controllers
                 UsuarioNuevo.Password = collection["Password"];
                 UsuarioNuevo.Logeado = true;
                 DataBase.Instance.ListadePruebaUser.Add(UsuarioNuevo);
-                return View("MenudeDecision");
+                if(collection["Username"] == "Admin")
+                {
+                    return View("MenudeDecision");
+                }
+                else
+                {
+                    return View("UsuarioDecision");
+                }
             }
             else
             {

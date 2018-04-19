@@ -45,7 +45,8 @@ namespace Proyecto.Controllers
             }
         }
 
-        public ActionResult VerPelicula(string URL, string Nombre, string Tipo, string Genero, string Anio)
+        [ValidateInput(false)]
+        public ActionResult VerPelicula(string URL, string Trailer, string Nombre, string Tipo, string Genero, string Anio)
         {
             foreach (var item in DataBase.Instance.ListadePruebaUser)
             {
@@ -55,9 +56,11 @@ namespace Proyecto.Controllers
                 }
             }
 
-            Pelicula NuevaPelicula = new Pelicula(URL, Nombre,Tipo,Anio,Genero);
+           
+            Pelicula NuevaPelicula = new Pelicula(URL, Trailer, Nombre,Tipo,Anio,Genero);
             List<Pelicula> ListadePeliculas = new List<Pelicula>();
             ListadePeliculas.Add(NuevaPelicula);
+            Session.Add("URL",NuevaPelicula.Trailer);
             return View(ListadePeliculas);
         }
 
