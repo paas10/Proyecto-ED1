@@ -1217,21 +1217,29 @@ namespace Librería_de_Clases
 
         public List<T> ObtenerArbol()
         {
-            List<T> Partidos = new List<T>();
-            InOrder(Raiz, ref Partidos);
+            List<T> Elemetnos = new List<T>();
+            InOrder(Raiz, ref Elemetnos);
 
-            return Partidos;
+            return Elemetnos;
         }
 
         private void InOrder(Nodo2_3<T> Aux, ref List<T> Elements)
         {
             if (Aux != null)
             {
-                InOrder(Aux.Hijos[0], ref Elements);
+                if (Aux.Hijos[0] != null)
+                    InOrder(Aux.Hijos[0], ref Elements);
+
                 Elements.Add(Aux.Elementos[0]);
-                InOrder(Aux.Hijos[1], ref Elements);
-                Elements.Add(Aux.Elementos[1]);
-                InOrder(Aux.Hijos[2], ref Elements);
+
+                if (Aux.Hijos[1] != null)
+                    InOrder(Aux.Hijos[1], ref Elements);
+
+                if (Aux.Elementos[1] != null)
+                    Elements.Add(Aux.Elementos[1]);
+
+                if (Aux.Hijos[2] != null)
+                    InOrder(Aux.Hijos[2], ref Elements);
             }
         }
 
