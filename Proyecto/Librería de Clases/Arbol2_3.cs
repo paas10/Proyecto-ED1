@@ -1238,10 +1238,88 @@ namespace Librería_de_Clases
             return default(T); 
         }
 
+        public T Buscar(Nodo2_3<T> NodoActual, T Valor)
+        {
+            Nodo2_3<T> NodoAux = new Nodo2_3<T>();
+            NodoAux = Raiz;
 
+                if (NodoAux == null)
+                {
+                    return default(T);
+                }
+                else if (NodoAux.EsHoja == true)
+                {
+                    if (NodoAux != null && NodoAux.Elementos[0].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else if (NodoAux != null && NodoAux.Elementos[1].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else
+                    {
+                        return default(T);
+                    }
+                }
+                // Si la siguiente condicion se cumple quiere decir que solo hay opción de hijo izquierdo o derecho.
+                else if (NodoAux.Elementos[1] == null)
+                {
+                    if (NodoAux.Elementos[0].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else if (NodoAux.Elementos[2].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else
+                    {
+                        if (NodoAux.Elementos[0].CompareTo(Valor) == -1)
+                        {
+                            return Buscar(NodoAux.Hijos[2], Valor);
+                        }
+                        else if (NodoAux.Elementos[2].CompareTo(Valor) == 1)
+                        {
+                            return Buscar(NodoAux.Hijos[0], Valor);
+                        }
+                    }
 
+                }
+                // Si la siguiente condicion se cumple quiere decir que hay opción hijo izquierdo, derecho o central.
+                else if (NodoAux.Elementos[0] != null && NodoAux.Elementos[1] != null)
+                {
 
+                    if (NodoAux.Elementos[0].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else if (NodoAux.Elementos[1].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else if (NodoAux.Elementos[2].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else if (NodoAux.Elementos[0].CompareTo(Valor) == -1)
+                    {
+                        if (NodoAux.Elementos[1].CompareTo(Valor) == 1)
+                        {
+                            return Buscar(NodoAux.Hijos[1], Valor);
+                        }
+                        else if (NodoAux.Elementos[2].CompareTo(Valor) == 1)
+                        {
+                            return Buscar(NodoAux.Hijos[2], Valor);
+                        }
+                    } else if (NodoAux.Elementos[0].CompareTo(Valor) == 1)
+                    {
+                        return Buscar(NodoAux.Hijos[0], Valor);
+                    }
+                }
 
+                return default(T);
+        }
 
 
 
