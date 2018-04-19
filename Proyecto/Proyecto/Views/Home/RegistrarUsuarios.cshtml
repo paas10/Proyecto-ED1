@@ -10,11 +10,11 @@
 <body style="background-image: url('/Content/darth.jpg'); background-size:cover">
 </body>
 
+@Html.Raw(TempData["msg"])
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
     <div class="form-horizontal" style="background: black; filter: alpha(opacity=50); opacity:0.8; border-radius:5px; height:350px;">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -64,9 +64,9 @@
             </div>
         </div>
     </div>
+
 }
 
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

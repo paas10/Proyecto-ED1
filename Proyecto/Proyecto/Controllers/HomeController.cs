@@ -75,8 +75,21 @@ namespace Proyecto.Controllers
             return View("Index");
         }
 
-        public ActionResult RegistrarUsuarios()
+        public ActionResult RegistrarUsuarios(FormCollection collection)
         {
+            if (collection["Nombre"] != null)
+            {
+                Usuario Nuevo = new Usuario();
+                Nuevo.Nombre = collection["Nombre"];
+                Nuevo.Apellido = collection["Apellido"];
+                Nuevo.Edad = Convert.ToInt32(collection["Edad"]);
+                Nuevo.Username = collection["Username"];
+                Nuevo.Password = collection["Password"];
+                Nuevo.Logeado = true;
+
+                DataBase.Instance.ArboldeUsuarios.Insertar(Nuevo);
+                TempData["msg"] = "<script> alert('Usuario insertado con éxito');</script>";
+            }
             return View();
         }
 
@@ -172,12 +185,23 @@ namespace Proyecto.Controllers
             Dato = Lector.ReadToEnd();
 
             //Se deserealiza el objeto por medio de .json obteniendo una lista de peliculas
-            var ListadePeliculas = JsonConvert.DeserializeObject<List<Pelicula>>(Dato);
+            var ListadePeliculasGeneral = JsonConvert.DeserializeObject<List<Pelicula>>(Dato);
 
-            //Se insertan las peliculas en el arbol
-            foreach (var item in ListadePeliculas)
+            //Se insertan las peliculas en el arbol y se clasifican
+            foreach (var item in ListadePeliculasGeneral)
             {
-                DataBase.Instance.ArboldePeliculas.Insertar(item);
+                if(item.Tipo == "Pelicula")
+                {
+                    DataBase.Instance.ArboldePeliculas.Insertar(item);
+                }
+                else if (item.Tipo == "Serie")
+                {
+                    DataBase.Instance.ArboldePeliculas.Insertar(item);
+                }
+                else if (item.Tipo == "Documental")
+                {
+                    DataBase.Instance.ArboldePeliculas.Insertar(item);
+                }
             }
 
             //Se crea una lista temporal de usuarios para identificar cual esta logeado

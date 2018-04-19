@@ -198,6 +198,7 @@
     <Content Include="Views\Home\MiUsuario.cshtml" />
     <Content Include="Views\Home\UsuarioDecision.cshtml" />
     <Content Include="Views\Home\ForgetPassword.cshtml" />
+    <Content Include="Views\Home\Prueba.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
