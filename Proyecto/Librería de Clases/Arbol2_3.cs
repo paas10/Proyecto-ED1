@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Librería_de_Clases
 {
-    public class Arbol2_3 <T> where T : IComparable
+    public class Arbol2_3<T> where T : IComparable
     {
 
         public Nodo2_3<T> Raiz;
@@ -19,8 +19,8 @@ namespace Librería_de_Clases
         private string determinante;
         private bool[] HijosCorrectos = new bool[3];
 
-        private List<T> Noditos = new List<T>(); 
-        
+        private List<T> Noditos = new List<T>();
+
         public Arbol2_3()
         {
             this.Raiz = null;
@@ -35,7 +35,7 @@ namespace Librería_de_Clases
             HijosCorrectos[0] = true;
             HijosCorrectos[1] = true;
             HijosCorrectos[2] = true;
-            Noditos = new List<T>(); 
+            Noditos = new List<T>();
 
             Insertar(vNuevo, ref Raiz);
             nElementos += 1;
@@ -48,8 +48,6 @@ namespace Librería_de_Clases
 
             CorregirPadres(ref Raiz);
         }
-
-
 
         private T Insertar(T vNuevo, ref Nodo2_3<T> nAuxiliar)
         {
@@ -101,7 +99,7 @@ namespace Librería_de_Clases
                     T valorTemp = Insertar(vNuevo, ref nAuxiliar.Hijos[0]);
 
                     if (terminado == true)
-                        return default(T); 
+                        return default(T);
 
                     // INSERTAR ACÁ
                     if (valorTemp != null)
@@ -132,7 +130,6 @@ namespace Librería_de_Clases
             return default(T);
         }
 
-
         private T InsertarAca(ref Nodo2_3<T> nAuxiliar, T vNuevo)
         {
             // Si el nodo únicamente tiene un valor, se inserta el segundo donde corresponde
@@ -159,7 +156,7 @@ namespace Librería_de_Clases
                             nAuxiliar.Elementos[0] = vNuevo;
                         }
                     }
-                    
+
                 }
 
                 if (nAuxiliar.Elementos[0].CompareTo(vNuevo) == -1)
@@ -175,7 +172,7 @@ namespace Librería_de_Clases
             }
             // Si el nodo tiene dos valores, se ordenan los valores para subir el valor central.
             // Por deduccion, si el elemento derecho no está vacío... el nodo está lleno.
-            else 
+            else
             {
                 if (nAuxiliar.Elementos[0].CompareTo(vNuevo) == 1)
                 {
@@ -205,10 +202,10 @@ namespace Librería_de_Clases
                             TrabajarSobreSecundaria = true;
                             RaizSecundaria = nPadre;
                         }
-                            
+
                     }
                     // si si existe papá y tiene espacio el valor se mete en él y se reorganizan los hijos.
-                    else 
+                    else
                     {
                         T subir = nAuxiliar.Elementos[0];
                         nAuxiliar.Elementos[0] = vNuevo;
@@ -330,7 +327,7 @@ namespace Librería_de_Clases
                                     copiarNodo(ref temp2, nHijoIzquierdo.Hijos[2].Hijos[1]);
                                     nHijoIzquierdo.Hijos[2].Hijos[0] = temp2;
                                     nHijoIzquierdo.Hijos[2].Hijos[1] = null;
-                                    
+
                                 }
 
                                 terminado = true;
@@ -735,7 +732,7 @@ namespace Librería_de_Clases
 
                                 int cant = 0;
                                 ContarLLaves(RaizSecundaria, ref cant);
-                                if (nElementos == cant  && determinante == nAuxiliar.PosicionHijo)
+                                if (nElementos == cant && determinante == nAuxiliar.PosicionHijo)
                                     terminado = true;
                             }
                         }
@@ -1145,7 +1142,7 @@ namespace Librería_de_Clases
                                 HijosCorrectos[1] = true;
                                 HijosCorrectos[2] = true;
                             }
-                           
+
 
                             nHijoIzquierdo.Padre = nAuxiliar.Padre;
                             nHijoCentral.Padre = nAuxiliar.Padre;
@@ -1169,7 +1166,7 @@ namespace Librería_de_Clases
                                     terminado = true;
                             }
 
-         
+
                             try
                             {
                                 if (nHijoDerecho.Hijos[0].Hijos[0] != null)
@@ -1187,7 +1184,7 @@ namespace Librería_de_Clases
                                 LimpiarHijos(nHijoCentral);
                             else if (HijosCorrectos[2] == false)
                                 LimpiarHijos(nHijoDerecho);
-                            
+
 
                             if (HijosCorrectos[1] == false || HijosCorrectos[2] == false)
                             {
@@ -1197,7 +1194,7 @@ namespace Librería_de_Clases
                                 HijosCorrectos[1] = true;
                                 HijosCorrectos[2] = true;
                             }
-                                
+
 
                         }
 
@@ -1205,15 +1202,8 @@ namespace Librería_de_Clases
                 }
             }
 
-            return default(T); 
+            return default(T);
         }
-
-
-
-
-
-
-
 
         public List<T> ObtenerArbol()
         {
@@ -1371,7 +1361,7 @@ namespace Librería_de_Clases
                 aux.Hijos[2] = vacio2;
 
             }
-            
+
         }
 
         private void GuardarHijos(Nodo2_3<T> Padre)
@@ -1402,7 +1392,7 @@ namespace Librería_de_Clases
                 if (Padre.Hijos[2].Elementos[1] != null)
                     Noditos.Add(Padre.Hijos[2].Elementos[1]);
             }
-            
+
         }
 
         private void LimpiarHijos(Nodo2_3<T> Padre)
@@ -1415,7 +1405,7 @@ namespace Librería_de_Clases
                 if (Padre.Hijos[0].Elementos[1] != null)
                     Padre.Hijos[0].Elementos[1] = default(T);
             }
-            
+
             // Hijo central
             if (Padre.Hijos[1] != null)
             {
@@ -1424,7 +1414,7 @@ namespace Librería_de_Clases
                 if (Padre.Hijos[1].Elementos[1] != null)
                     Padre.Hijos[1].Elementos[1] = default(T);
             }
-            
+
             // Hijo Derecho
             if (Padre.Hijos[0] != null)
             {
@@ -1433,7 +1423,93 @@ namespace Librería_de_Clases
                 if (Padre.Hijos[2].Elementos[1] != null)
                     Padre.Hijos[2].Elementos[1] = default(T);
             }
-            
+
         }
+
+        public T Buscar(Nodo2_3<T> NodoActual, T Valor)
+        {
+            Nodo2_3<T> NodoAux = new Nodo2_3<T>();
+            NodoAux = Raiz;
+
+                if (NodoAux == null)
+                {
+                    return default(T);
+                }
+                else if (NodoAux.EsHoja == true)
+                {
+                    if (NodoAux != null && NodoAux.Elementos[0].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else if (NodoAux != null && NodoAux.Elementos[1].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else
+                    {
+                        return default(T);
+                    }
+                }
+                // Si la siguiente condicion se cumple quiere decir que solo hay opción de hijo izquierdo o derecho.
+                else if (NodoAux.Elementos[1] == null)
+                {
+                    if (NodoAux.Elementos[0].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else if (NodoAux.Elementos[2].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else
+                    {
+                        if (NodoAux.Elementos[0].CompareTo(Valor) == -1)
+                        {
+                            return Buscar(NodoAux.Hijos[2], Valor);
+                        }
+                        else if (NodoAux.Elementos[2].CompareTo(Valor) == 1)
+                        {
+                            return Buscar(NodoAux.Hijos[0], Valor);
+                        }
+                    }
+
+                }
+                // Si la siguiente condicion se cumple quiere decir que hay opción hijo izquierdo, derecho o central.
+                else if (NodoAux.Elementos[0] != null && NodoAux.Elementos[1] != null)
+                {
+
+                    if (NodoAux.Elementos[0].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else if (NodoAux.Elementos[1].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else if (NodoAux.Elementos[2].CompareTo(Valor) == 0)
+                    {
+                        return Valor;
+                    }
+                    else if (NodoAux.Elementos[0].CompareTo(Valor) == -1)
+                    {
+                        if (NodoAux.Elementos[1].CompareTo(Valor) == 1)
+                        {
+                            return Buscar(NodoAux.Hijos[1], Valor);
+                        }
+                        else if (NodoAux.Elementos[2].CompareTo(Valor) == 1)
+                        {
+                            return Buscar(NodoAux.Hijos[2], Valor);
+                        }
+                    } else if (NodoAux.Elementos[0].CompareTo(Valor) == 1)
+                    {
+                        return Buscar(NodoAux.Hijos[0], Valor);
+                    }
+                }
+
+
+                return default(T);
+        }
+
     }
-}
+
+ }
