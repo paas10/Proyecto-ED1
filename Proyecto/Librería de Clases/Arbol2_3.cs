@@ -49,8 +49,6 @@ namespace Librería_de_Clases
             CorregirPadres(ref Raiz);
         }
 
-
-
         private T Insertar(T vNuevo, ref Nodo2_3<T> nAuxiliar)
         {
             // Si el nodo esta vacío (raiz inicialmente) únicamente se inserta el valor en el nodo.
@@ -131,7 +129,6 @@ namespace Librería_de_Clases
 
             return default(T);
         }
-
 
         private T InsertarAca(ref Nodo2_3<T> nAuxiliar, T vNuevo)
         {
@@ -1237,13 +1234,6 @@ namespace Librería_de_Clases
 
             return default(T); 
         }
-
-
-
-
-
-
-
 
         public List<T> ObtenerArbol()
         {
