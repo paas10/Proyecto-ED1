@@ -81,10 +81,10 @@
 
 @if (ViewBag.Message == "Admin" || ViewBag.Message == "admin")
 {
-    <div>
-        <div style="float:left; background-color:black; opacity:0.8; border-radius:8px;">@Html.ActionLink("Cargar Archivo .Json de Usuarios", "JsonUser", new { /* id=item.PrimaryKey */ })</div>
-        <br />
-        <br />
-        <div style="float:left;  background-color:black; opacity:0.8; border-radius:8px;">@Html.ActionLink("Eliminar Peliculas", "EliminarPelis", new { /* id=item.PrimaryKey */ })</div>
-    </div>
+<div>
+    @Html.ActionLink("Cargar Archivo Json", "json", "Pelicula", null, new { @class = "btn btn-primary btn-large" })
+    <br />
+    <br />
+    @Html.ActionLink("Eliminar Peliculas", "EliminarPelis", "Pelicula", null, new { @class = "btn btn-primary btn-large" })
+</div>
 }

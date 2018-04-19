@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using Librería_de_Clases;
+using Newtonsoft.Json;
 
 namespace Proyecto.Controllers
 {
@@ -211,7 +212,69 @@ namespace Proyecto.Controllers
             return View("MisPeliculas", ListaGeneral);
         }
 
-            // GET: Pelicula/Details/5
+        public ActionResult json()
+        {
+            List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
+            ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+
+            //Se crea una lista temporal de usuarios para ver si esta logeada o no
+            foreach (var item in ListaTemporaldeUsuarios)
+            {
+                if (item.Logeado == true)
+                {
+                    ViewBag.Message = item.Nombre;
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //Aca se hace el Ingreso por medio de Archivo de Texto, ya que el Boton de Result esta Linkeado.
+        public ActionResult json(HttpPostedFileBase file, int? Tipo)
+        {
+            //Se valida el .json
+            if (Path.GetExtension(file.FileName) != ".json")
+            {
+                //Aca se debe de Agregar una Vista de Error, o de Datos No Cargados
+                TempData["msg"] = "<script> alert('Error El Archivo Cargado No es de Tipo Json');</script>";
+                return RedirectToAction("Error", "Shared");
+            }
+
+            Stream Direccion = file.InputStream;
+            //Se lee el Archivo que se subio, por medio del Lector
+
+            StreamReader Lector = new StreamReader(Direccion, System.Text.Encoding.UTF8);
+            //El Archivo se lee en una linea para luego ingresarlo
+
+            string Dato = "";
+            Dato = Lector.ReadToEnd();
+
+            //Se deserealiza el objeto por medio de .json obteniendo una lista de peliculas
+            var ListadeUsuarios = JsonConvert.DeserializeObject<List<Usuario>>(Dato);
+
+            //Se insertan las peliculas en el arbol y se clasifican
+            foreach (var item in ListadeUsuarios)
+            {
+                    DataBase.Instance.ArboldeUsuarios.Insertar(item);
+            }
+
+            //Se crea una lista temporal de usuarios para identificar cual esta logeado
+            List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
+            ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+
+            foreach (var item in ListaTemporaldeUsuarios)
+            {
+                if (item.Logeado == true)
+                {
+                    ViewBag.Message = item.Nombre;
+                }
+            }
+
+            return View("MiUsuario","Home");
+        }
+
+        // GET: Pelicula/Details/5
         public ActionResult Details(int id)
         {
             return View();
