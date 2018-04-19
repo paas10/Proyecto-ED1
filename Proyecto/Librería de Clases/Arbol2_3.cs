@@ -1361,72 +1361,93 @@ namespace Librería_de_Clases
                             }
 
                         }
-                        else if (nAuxiliar.Padre.Hijos[2].Elementos[1] != null)
+
+                    }
+                    else if (nAuxiliar.PosicionHijo == "Hijo Derecho")
+                    {
+                        if (nAuxiliar.Padre.Hijos[0].Elementos[0] != null && nAuxiliar.Padre.Hijos[0].Elementos[1] != null)
                         {
+                            if (nAuxiliar.Padre.Elementos[1] == null)
+                            {
+                                nAuxiliar.Elementos[0] = nAuxiliar.Padre.Elementos[0];
+                                nAuxiliar.Padre.Elementos[0] = nAuxiliar.Padre.Hijos[0].Elementos[1];
+                                nAuxiliar.Padre.Hijos[2].Elementos[1] = default(T);
+                            }
+                            else
+                            {
+                                nAuxiliar.Elementos[0] = nAuxiliar.Padre.Elementos[1];
+                                nAuxiliar.Padre.Elementos[1] = nAuxiliar.Padre.Elementos[0];
+                                nAuxiliar.Padre.Elementos[0] = nAuxiliar.Padre.Hijos[0].Elementos[1];
+                                nAuxiliar.Padre.Hijos[1].Elementos[1] = default(T);
+                            }
 
                         }
-                        
 
                     }
                 }
-                
+
+                // Si la siguiente condicion se cumple quiere decir que solo hay opción de hijo izquierdo o derecho.
+                else if (nAuxiliar.Elementos[1] == null)
+                {
+                    // El valor a eliminar es MENOR que la llave padre, se debe dirigir al hijo izquierdo.
+                    if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == 1)
+                        Eliminar(ref nAuxiliar.Hijos[0], vEliminar);
+                    // El valor a eliminar es MAYOR que la llave padre, se debe dirigir al hijo derecho.
+                    else if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == -1)
+                        Eliminar(ref nAuxiliar.Hijos[2], vEliminar);
+                    // El valor a eliminar está en esa llave
+                    else if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == 0)
+                    {
+
+                    }
+                }
+                // Si la siguiente condicion se cumple quiere decir que hay opción hijo izquierdo, derecho o central.
+                else if (nAuxiliar.Elementos[0] != null && nAuxiliar.Elementos[1] != null)
+                {
+                    // El valor nuevo es MENOR que la llave padre izquierda, se debe dirigir al hijo izquierdo.
+                    if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == 1)
+                    {
+                        determinante = "Hijo Izquierdo";
+                        T valorTemp = Insertar(vEliminar, ref nAuxiliar.Hijos[0]);
+
+                        if (terminado == true)
+                            return;
+
+                        // INSERTAR ACÁ
+                        if (valorTemp != null)
+                            InsertarAca(ref nAuxiliar, valorTemp);
+                    }
+                    // El valor nuevo es MAYOR que la llave padre izquierda y MENOR que la llave padre derecha, se debe dirigir al hijo central.
+                    if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == -1 && nAuxiliar.Elementos[1].CompareTo(vEliminar) == 1)
+                    {
+                        determinante = "Hijo Central";
+                        T valorTemp = Insertar(vEliminar, ref nAuxiliar.Hijos[1]);
+
+                        // INSERTAR ACÁ
+                        if (valorTemp != null)
+                            InsertarAca(ref nAuxiliar, valorTemp);
+                    }
+                    // El valor nuevo es MAYOR que la llave padre derecha, se debe dirigir al hijo derecho.
+                    else if (nAuxiliar.Elementos[1].CompareTo(vEliminar) == -1)
+                    {
+                        determinante = "Hijo Derecho";
+                        T valorTemp = Insertar(vEliminar, ref nAuxiliar.Hijos[2]);
+
+                        // INSERTAR ACÁ
+                        if (valorTemp != null)
+                            InsertarAca(ref nAuxiliar, valorTemp);
+                    }
+                }
+
             }
-            // Si la siguiente condicion se cumple quiere decir que solo hay opción de hijo izquierdo o derecho.
-            else if (nAuxiliar.Elementos[1] == null)
-            {
-                // El valor a eliminar es MENOR que la llave padre, se debe dirigir al hijo izquierdo.
-                if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == 1)
-                    Eliminar(ref nAuxiliar.Hijos[0], vEliminar);
-                // El valor a eliminar es MAYOR que la llave padre, se debe dirigir al hijo derecho.
-                else if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == -1)
-                    Eliminar(ref nAuxiliar.Hijos[2], vEliminar);
-                // El valor a eliminar está en esa llave
-                else if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == 0)
-                {
 
-                }
+            if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == 0)
+                nAuxiliar.Elementos[0] = default(T);
+            else if (nAuxiliar.Elementos[1].CompareTo(vEliminar) == 0)
+                nAuxiliar.Elementos[1] = default(T);
+            
 
-                // DESDE ACA NO TOQUE NADA
-            }
-            // Si la siguiente condicion se cumple quiere decir que hay opción hijo izquierdo, derecho o central.
-            else if (nAuxiliar.Elementos[0] != null && nAuxiliar.Elementos[1] != null)
-            {
-                // El valor nuevo es MENOR que la llave padre izquierda, se debe dirigir al hijo izquierdo.
-                if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == 1)
-                {
-                    determinante = "Hijo Izquierdo";
-                    T valorTemp = Insertar(vEliminar, ref nAuxiliar.Hijos[0]);
-
-                    if (terminado == true)
-                        return;
-
-                    // INSERTAR ACÁ
-                    if (valorTemp != null)
-                        InsertarAca(ref nAuxiliar, valorTemp);
-                }
-                // El valor nuevo es MAYOR que la llave padre izquierda y MENOR que la llave padre derecha, se debe dirigir al hijo central.
-                if (nAuxiliar.Elementos[0].CompareTo(vEliminar) == -1 && nAuxiliar.Elementos[1].CompareTo(vEliminar) == 1)
-                {
-                    determinante = "Hijo Central";
-                    T valorTemp = Insertar(vEliminar, ref nAuxiliar.Hijos[1]);
-
-                    // INSERTAR ACÁ
-                    if (valorTemp != null)
-                        InsertarAca(ref nAuxiliar, valorTemp);
-                }
-                // El valor nuevo es MAYOR que la llave padre derecha, se debe dirigir al hijo derecho.
-                else if (nAuxiliar.Elementos[1].CompareTo(vEliminar) == -1)
-                {
-                    determinante = "Hijo Derecho";
-                    T valorTemp = Insertar(vEliminar, ref nAuxiliar.Hijos[2]);
-
-                    // INSERTAR ACÁ
-                    if (valorTemp != null)
-                        InsertarAca(ref nAuxiliar, valorTemp);
-                }
-            }
         }
-
 
 
         public List<T> ObtenerArbol()
