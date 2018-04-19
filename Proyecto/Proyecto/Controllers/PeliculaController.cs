@@ -32,7 +32,30 @@ namespace Proyecto.Controllers
             List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
             List<Pelicula> ListaTemporaldePeliculas = new List<Pelicula>();
             ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
-            ListaTemporaldePeliculas = DataBase.Instance.ArboldePeliculas.ObtenerArbol();
+
+            foreach (var item in DataBase.Instance.ArboldeSeries.ObtenerArbol())
+            {
+                if (item != null)
+                {
+                    ListaTemporaldePeliculas.Add(item);
+                }
+            }
+
+            foreach (var item in DataBase.Instance.ArboldeDocumentales.ObtenerArbol())
+            {
+                if (item != null)
+                {
+                    ListaTemporaldePeliculas.Add(item);
+                }
+            }
+
+            foreach (var item in DataBase.Instance.ArboldePeliculas.ObtenerArbol())
+            {
+                if (item != null)
+                {
+                    ListaTemporaldePeliculas.Add(item);
+                }
+            }
 
             //se evalua si el usuario esta logeado
             foreach (var item in ListaTemporaldeUsuarios)
