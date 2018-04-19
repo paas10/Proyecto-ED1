@@ -201,6 +201,8 @@
     <Content Include="Views\Home\Prueba.cshtml" />
     <Content Include="Views\Pelicula\BuscarPelicula.cshtml" />
     <Content Include="Views\Pelicula\json.cshtml" />
+    <Content Include="Views\Pelicula\EliminarPelis.cshtml" />
+    <Content Include="Views\Pelicula\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

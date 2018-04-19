@@ -27,7 +27,7 @@ namespace Proyecto.Controllers
         }
 
             // GET: Pelicula
-        public ActionResult MisPeliculas(string NombreUsuario)
+        public ActionResult MisPeliculas(string NombreUsuario, List<Pelicula> Lista)
         {
             //Se crean listas temporales de usuarios y peliculas para usarlas despues
             List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
@@ -74,6 +74,10 @@ namespace Proyecto.Controllers
             }
             else
             {
+                if(Lista != null)
+                {
+                    return View(Lista);
+                }
                 //Se envia la lista temporal de peliculas a la vista
                 return View(ListaTemporaldePeliculas);
             }
@@ -274,6 +278,38 @@ namespace Proyecto.Controllers
             return View("MiUsuario","Home");
         }
 
+        public ActionResult EliminarPelis()
+        {
+            List<Pelicula> ListadePeliculas = new List<Pelicula>();
+
+            foreach (var item in DataBase.Instance.ArboldeSeries.ObtenerArbol())
+            {
+                if (item != null)
+                {
+                    ListadePeliculas.Add(item);
+                }
+            }
+
+            foreach (var item in DataBase.Instance.ArboldeDocumentales.ObtenerArbol())
+            {
+                if (item != null)
+                {
+                    ListadePeliculas.Add(item);
+                }
+            }
+
+            foreach (var item in DataBase.Instance.ArboldePeliculas.ObtenerArbol())
+            {
+                if (item != null)
+                {
+                    ListadePeliculas.Add(item);
+                }
+            }
+
+
+            return View(ListadePeliculas);
+        }
+
         // GET: Pelicula/Details/5
         public ActionResult Details(int id)
         {
@@ -309,20 +345,56 @@ namespace Proyecto.Controllers
         }
 
         // GET: Pelicula/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string URL, string Trailer, string Nombre, string Tipo, string Anio, string Genero)
         {
-            return View();
+            List<Pelicula> Lista = new List<Pelicula>();
+            Pelicula Nueva = new Pelicula(URL,Trailer,Nombre,Tipo,Anio,Genero);
+            Lista.Add(Nueva);
+            return View(Lista);
         }
 
         // POST: Pelicula/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string Nombre, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                List<Pelicula> PeliculasEliminadas = new List<Pelicula>();
+                foreach (var item in DataBase.Instance.ArboldeSeries.ObtenerArbol())
+                {
+                    if (item != null)
+                    {
+                        PeliculasEliminadas.Add(item);
+                    }
+                }
 
-                return RedirectToAction("Index");
+                foreach (var item in DataBase.Instance.ArboldeDocumentales.ObtenerArbol())
+                {
+                    if (item != null)
+                    {
+                        PeliculasEliminadas.Add(item);
+                    }
+                }
+
+                foreach (var item in DataBase.Instance.ArboldePeliculas.ObtenerArbol())
+                {
+                    if (item != null)
+                    {
+                        PeliculasEliminadas.Add(item);
+                    }
+                }
+
+                foreach (var item in PeliculasEliminadas)
+                {
+                    if(item.Nombre == Nombre)
+                    {
+                        PeliculasEliminadas.Remove(item);
+                    }
+
+                }
+
+
+                return RedirectToAction("MisPeliculas", PeliculasEliminadas);
             }
             catch
             {
