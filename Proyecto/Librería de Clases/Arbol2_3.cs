@@ -365,21 +365,33 @@ namespace Librería_de_Clases
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
 
-                            if (nAuxiliar.Hijos[0] != null && nAuxiliar.Hijos[1] != null && nAuxiliar.Hijos[2] != null && nAuxiliar.Hijos[0].EsHoja == true)
+                            try
                             {
-                                nHijoIzquierdo.Hijos[0] = nAuxiliar.Hijos[0];
-                                nHijoDerecho.Hijos[2] = nAuxiliar.Hijos[1];
+                                copiarNodo(ref nHijoIzquierdo, nAuxiliar);
+                                nHijoIzquierdo.Elementos[1] = default(T);
+                                nHijoIzquierdo.Hijos[2] = nHijoIzquierdo.Hijos[1];
+                                nHijoIzquierdo.Hijos[1] = null;
 
-                                T LlaveT = default(T);
-                                Nodo2_3<T> vacio1 = new Nodo2_3<T>();
-                                Nodo2_3<T> vacio2 = new Nodo2_3<T>();
-                                nHijoDerecho.Hijos[0] = vacio1;
-                                nHijoIzquierdo.Hijos[2] = vacio2;
+                                copiarNodo(ref nHijoDerecho, nAuxiliar);
+                                nHijoDerecho.Elementos[0] = nHijoDerecho.Elementos[1];
+                                nHijoDerecho.Elementos[1] = default(T);
 
-                                nHijoIzquierdo.Hijos[2].Elementos[1] = NuevoOriginal;
-                                nHijoDerecho.Hijos[0] = nAuxiliar.Hijos[1];
-                                nHijoDerecho.Hijos[0].Elementos[0] = nHijoDerecho.Hijos[0].Elementos[1];
-                                nHijoDerecho.Hijos[0].Elementos[1] = LlaveT;
+                                Nodo2_3<T> nodoTemp1 = new Nodo2_3<T>();
+                                copiarNodo(ref nodoTemp1, nHijoDerecho.Hijos[2]);
+                                nHijoDerecho.Hijos[0] = nodoTemp1;
+                                nHijoDerecho.Hijos[0].Elementos[1] = default(T);
+
+                                Nodo2_3<T> nodoTemp2 = new Nodo2_3<T>();
+                                copiarNodo(ref nodoTemp2, nHijoDerecho.Hijos[2]);
+                                nHijoDerecho.Hijos[2] = nodoTemp2;
+                                nHijoDerecho.Hijos[2].Elementos[0] = nHijoDerecho.Hijos[2].Elementos[1];
+                                nHijoDerecho.Hijos[2].Elementos[1] = default(T);
+                                nHijoDerecho.Hijos[1] = null;
+                            }
+                            catch
+                            {
+                                nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                                nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
                             }
 
                             nHijoIzquierdo.Padre = nAuxiliar.Padre;
@@ -395,8 +407,7 @@ namespace Librería_de_Clases
                                 RaizSecundaria.Hijos[0].Hijos[2] = nHijoIzquierdo;
                                 RaizSecundaria.Hijos[2].Hijos[0] = nHijoDerecho;
 
-                                if (determinante == nAuxiliar.PosicionHijo)
-                                    terminado = true;
+                                terminado = true;
                             }
                         }
                         else if (nAuxiliar.PosicionHijo == "Hijo Derecho")
@@ -702,22 +713,33 @@ namespace Librería_de_Clases
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
 
-                            if (nAuxiliar.Hijos[0] != null && nAuxiliar.Hijos[1] != null && nAuxiliar.Hijos[2] != null && nAuxiliar.Hijos[0].EsHoja == true)
+                            try
                             {
-                                nHijoIzquierdo.Hijos[0] = nAuxiliar.Hijos[0];
-                                nHijoDerecho.Hijos[2] = nAuxiliar.Hijos[1];
+                                copiarNodo(ref nHijoIzquierdo, nAuxiliar);
+                                nHijoIzquierdo.Elementos[1] = default(T);
+                                nHijoIzquierdo.Hijos[2] = nHijoIzquierdo.Hijos[1];
+                                nHijoIzquierdo.Hijos[1] = null;
 
-                                T LlaveT = default(T);
-                                Nodo2_3<T> vacio1 = new Nodo2_3<T>();
-                                Nodo2_3<T> vacio2 = new Nodo2_3<T>();
-                                nHijoDerecho.Hijos[0] = vacio1;
-                                nHijoIzquierdo.Hijos[2] = vacio2;
+                                copiarNodo(ref nHijoDerecho, nAuxiliar);
+                                nHijoDerecho.Elementos[0] = nHijoDerecho.Elementos[1];
+                                nHijoDerecho.Elementos[1] = default(T);
 
-                                nHijoIzquierdo.Hijos[2] = nAuxiliar.Hijos[1];
-                                nHijoIzquierdo.Hijos[2].Elementos[1] = LlaveT;
-                                nHijoDerecho.Hijos[0] = nAuxiliar.Hijos[1];
-                                nHijoDerecho.Hijos[0].Elementos[0] = nHijoDerecho.Hijos[0].Elementos[1];
-                                nHijoDerecho.Hijos[0].Elementos[1] = LlaveT;
+                                Nodo2_3<T> nodoTemp1 = new Nodo2_3<T>();
+                                copiarNodo(ref nodoTemp1, nHijoDerecho.Hijos[2]);
+                                nHijoDerecho.Hijos[0] = nodoTemp1;
+                                nHijoDerecho.Hijos[0].Elementos[1] = default(T);
+
+                                Nodo2_3<T> nodoTemp2 = new Nodo2_3<T>();
+                                copiarNodo(ref nodoTemp2, nHijoDerecho.Hijos[2]);
+                                nHijoDerecho.Hijos[2] = nodoTemp2;
+                                nHijoDerecho.Hijos[2].Elementos[0] = nHijoDerecho.Hijos[2].Elementos[1];
+                                nHijoDerecho.Hijos[2].Elementos[1] = default(T);
+                                nHijoDerecho.Hijos[1] = null;
+                            }
+                            catch
+                            {
+                                nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                                nHijoDerecho = new Nodo2_3<T>(nAuxiliar.Elementos[1]);
                             }
 
                             nHijoIzquierdo.Padre = nAuxiliar.Padre;
@@ -733,10 +755,7 @@ namespace Librería_de_Clases
                                 RaizSecundaria.Hijos[0].Hijos[2] = nHijoIzquierdo;
                                 RaizSecundaria.Hijos[2].Hijos[0] = nHijoDerecho;
 
-                                int cant = 0;
-                                ContarLLaves(RaizSecundaria, ref cant);
-                                if (nElementos == cant  && determinante == nAuxiliar.PosicionHijo)
-                                    terminado = true;
+                                terminado = true;
                             }
                         }
                         else if (nAuxiliar.PosicionHijo == "Hijo Derecho")
@@ -1035,6 +1054,7 @@ namespace Librería_de_Clases
                         }
                         else if (nAuxiliar.PosicionHijo == "Hijo Central")
                         {
+
                             if (TrabajarSobreSecundaria == true)
                             {
                                 RaizSecundaria.Hijos[0].Hijos[0] = Raiz.Hijos[0];
@@ -1044,20 +1064,33 @@ namespace Librería_de_Clases
                             Nodo2_3<T> nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
                             Nodo2_3<T> nHijoDerecho = new Nodo2_3<T>(vNuevo);
 
-                            if (nAuxiliar.Hijos[0] != null && nAuxiliar.Hijos[1] != null && nAuxiliar.Hijos[2] != null && nAuxiliar.Hijos[0].EsHoja == true)
+                            try
                             {
-                                nHijoIzquierdo.Hijos[0] = nAuxiliar.Hijos[0];
-                                nHijoDerecho.Hijos[2] = nAuxiliar.Hijos[1];
+                                copiarNodo(ref nHijoIzquierdo, nAuxiliar);
+                                nHijoIzquierdo.Elementos[1] = default(T);
+                                nHijoIzquierdo.Hijos[2] = nHijoIzquierdo.Hijos[1];
+                                nHijoIzquierdo.Hijos[1] = null;
 
-                                T LlaveT = default(T);
-                                Nodo2_3<T> vacio1 = new Nodo2_3<T>();
-                                Nodo2_3<T> vacio2 = new Nodo2_3<T>();
-                                nHijoDerecho.Hijos[0] = vacio1;
-                                nHijoIzquierdo.Hijos[2] = vacio2;
+                                copiarNodo(ref nHijoDerecho, nAuxiliar);
+                                nHijoDerecho.Elementos[0] = nHijoDerecho.Elementos[1];
+                                nHijoDerecho.Elementos[1] = default(T);
 
-                                nHijoIzquierdo.Hijos[2] = nAuxiliar.Hijos[1];
-                                nHijoIzquierdo.Hijos[2].Elementos[1] = LlaveT;
-                                nHijoDerecho.Hijos[0].Elementos[0] = NuevoOriginal;
+                                Nodo2_3<T> nodoTemp1 = new Nodo2_3<T>();
+                                copiarNodo(ref nodoTemp1, nHijoDerecho.Hijos[2]);
+                                nHijoDerecho.Hijos[0] = nodoTemp1;
+                                nHijoDerecho.Hijos[0].Elementos[1] = default(T);
+
+                                Nodo2_3<T> nodoTemp2 = new Nodo2_3<T>();
+                                copiarNodo(ref nodoTemp2, nHijoDerecho.Hijos[2]);
+                                nHijoDerecho.Hijos[2] = nodoTemp2;
+                                nHijoDerecho.Hijos[2].Elementos[0] = nHijoDerecho.Hijos[2].Elementos[1];
+                                nHijoDerecho.Hijos[2].Elementos[1] = default(T);
+                                nHijoDerecho.Hijos[1] = null;
+                            }
+                            catch
+                            {
+                                nHijoIzquierdo = new Nodo2_3<T>(nAuxiliar.Elementos[0]);
+                                nHijoDerecho = new Nodo2_3<T>(vNuevo);
                             }
 
                             nHijoIzquierdo.Padre = nAuxiliar.Padre;
@@ -1073,10 +1106,7 @@ namespace Librería_de_Clases
                                 RaizSecundaria.Hijos[0].Hijos[2] = nHijoIzquierdo;
                                 RaizSecundaria.Hijos[2].Hijos[0] = nHijoDerecho;
 
-                                int cant = 0;
-                                ContarLLaves(RaizSecundaria, ref cant);
-                                if (nElementos == cant && determinante == nAuxiliar.PosicionHijo)
-                                    terminado = true;
+                                terminado = true;
                             }
                         }
                         else if (nAuxiliar.PosicionHijo == "Hijo Derecho")
