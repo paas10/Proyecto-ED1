@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using Librería_de_Clases;
 
 namespace Proyecto.Controllers
 {
@@ -27,28 +28,41 @@ namespace Proyecto.Controllers
             // GET: Pelicula
         public ActionResult MisPeliculas(string NombreUsuario)
         {
-            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            //Se crean listas temporales de usuarios y peliculas para usarlas despues
+            List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
+            List<Pelicula> ListaTemporaldePeliculas = new List<Pelicula>();
+            ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+            ListaTemporaldePeliculas = DataBase.Instance.ArboldePeliculas.ObtenerArbol();
+
+            //se evalua si el usuario esta logeado
+            foreach (var item in ListaTemporaldeUsuarios)
             {
                 if (item.Logeado == true)
                 {
                     ViewBag.Message = item.Nombre;
                 }
             }
-            if (DataBase.Instance.ListadePrueba == null)
+            if (ListaTemporaldePeliculas == null)
             {
+                //Se envia un mensaje de error si el usuario no tiene peliculas agregadas
                 TempData["msg"] = "<script> alert('No Tienes Peliculas Agregadas, Porfavor Agrega Peliculas Antes para ver tu Inicio');</script>";
                 return RedirectToAction("MenudeDecision","Home");
             }
             else
             {
-                return View(DataBase.Instance.ListadePrueba);
+                //Se envia la lista temporal de peliculas a la vista
+                return View(ListaTemporaldePeliculas);
             }
         }
 
         [ValidateInput(false)]
         public ActionResult VerPelicula(string URL, string Trailer, string Nombre, string Tipo, string Genero, string Anio)
         {
-            foreach (var item in DataBase.Instance.ListadePruebaUser)
+            //Se Crea una lista temporal de usuario para evaluar cual esta logeado
+            List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
+            ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
+
+            foreach (var item in ListaTemporaldeUsuarios)
             {
                 if (item.Logeado == true)
                 {
@@ -56,7 +70,6 @@ namespace Proyecto.Controllers
                 }
             }
 
-           
             Pelicula NuevaPelicula = new Pelicula(URL, Trailer, Nombre,Tipo,Anio,Genero);
             List<Pelicula> ListadePeliculas = new List<Pelicula>();
             ListadePeliculas.Add(NuevaPelicula);

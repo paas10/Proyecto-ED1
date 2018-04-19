@@ -126,6 +126,7 @@ namespace Proyecto.Controllers
             }
             else
             {
+                //Si no es correcto se envia un mensaje de Error
                 TempData["msg1"] = "<script> alert('El Usuario o La Contraseña es Incorrecta');</script>";
                 return View();
             }
@@ -137,6 +138,7 @@ namespace Proyecto.Controllers
             List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
             ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
 
+            //Se crea una lista temporal de usuarios para ver si esta logeada o no
             foreach (var item in ListaTemporaldeUsuarios)
             {
                 if (item.Logeado == true)
@@ -152,6 +154,7 @@ namespace Proyecto.Controllers
         //Aca se hace el Ingreso por medio de Archivo de Texto, ya que el Boton de Result esta Linkeado.
         public ActionResult UploadFile(HttpPostedFileBase file, int? Tipo)
         {
+            //Se valida el .json
             if (Path.GetExtension(file.FileName) != ".json")
             {
                 //Aca se debe de Agregar una Vista de Error, o de Datos No Cargados
@@ -168,14 +171,16 @@ namespace Proyecto.Controllers
             string Dato = "";
             Dato = Lector.ReadToEnd();
 
+            //Se deserealiza el objeto por medio de .json obteniendo una lista de peliculas
             var ListadePeliculas = JsonConvert.DeserializeObject<List<Pelicula>>(Dato);
 
+            //Se insertan las peliculas en el arbol
             foreach (var item in ListadePeliculas)
             {
                 DataBase.Instance.ArboldePeliculas.Insertar(item);
-
             }
 
+            //Se crea una lista temporal de usuarios para identificar cual esta logeado
             List<Usuario> ListaTemporaldeUsuarios = new List<Usuario>();
             ListaTemporaldeUsuarios = DataBase.Instance.ArboldeUsuarios.ObtenerArbol();
 
