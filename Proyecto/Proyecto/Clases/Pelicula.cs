@@ -60,12 +60,12 @@ namespace Proyecto.Models
             {
                 Pelicula pelicula = obj as Pelicula;
 
-                res = CompareByAño(pelicula);
+                res = CompareByNombredePelicula(pelicula);
 
                 if (res != 0)
                     return res;
                 else
-                    res = CompareByNombredePelicula(pelicula);
+                    res = CompareByAño(pelicula); 
 
                 return res;
             }
